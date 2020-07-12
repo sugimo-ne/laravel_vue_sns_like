@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import Home from './views/Home'
+import PostDetail from './views/PostDetail'
 import SystemError from './views/errors/System'
 
 
@@ -18,6 +19,11 @@ const router = new VueRouter({
             path:'/500',
             component:SystemError
         },
+        {
+            path:'/:user/:postId',
+            component:PostDetail,
+            props: true
+        }
     ]
 })
 

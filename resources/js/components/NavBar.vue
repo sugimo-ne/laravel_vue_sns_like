@@ -31,6 +31,7 @@ export default {
         font-size: 2rem;
     }
     .nav{
+        z-index:10;
         background: white;
         height:55px;
         position: fixed;

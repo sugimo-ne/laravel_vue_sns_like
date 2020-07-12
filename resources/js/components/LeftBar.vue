@@ -33,6 +33,7 @@ export default {
 
 <style scoped>
  .left_bar{
+        z-index:10;
         width:25%;
         background:white;
         height:100vh;
