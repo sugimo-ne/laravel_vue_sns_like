@@ -21,62 +21,115 @@
         <div v-if="loading">
             now loading...
         </div>
-        <div v-else class="container">
-            <Post 
-            :id='post.id'
-            :content='post.content'
-            :created_at="post.created_at"
-            :name="post.user.name">
-            </Post>
-            <hr>
-            <div class="row">
-                <div class="col-3 actions">
-                    <span class="info">いいね</span>
-                </div>
-                <div class="col-3 actions">
-                    <span class="info">コメント</span>
-                </div>
-            </div>
-            
-            <hr>
-            <div class="row">
-                <div class="col-3 actions">
-                    <i class="fas fa-heart"></i>
-                </div>
-                <div class="col-3 actions">
-                    <i class="far fa-comment-dots"></i>
-                </div>
-                <div class="col-3 actions">
-                    	
-                </div>
-                <div class="col-3 actions" @click="deleteModal = true">
-                    <div v-if="post.user_id === currentUser.id">
-                        <i class="fas fa-trash-alt"></i>
+        <div v-else>
+            <div class="container">
+                <Post 
+                :id='post.id'
+                :content='post.content'
+                :created_at="post.created_at"
+                :name="post.user.name">
+                </Post>
+                <hr>
+                <div class="row">
+                    <div class="col-3 actions">
+                        <span class="info">いいね</span>
+                    </div>
+                    <div class="col-3 actions">
+                        <span class="info">コメント</span>
                     </div>
                 </div>
-            </div>
+                
+                <hr>
+                <div class="row" v-if="isLogin">
+                    <div class="col-3 actions">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="col-3 actions">
+                        <i class="far fa-comment-dots" :class="{'form_active':showForm == true}" @click="formCall(showForm)"></i>
+                    </div>
+                    <div class="col-3 actions">
+                            
+                    </div>
+                    <div class="col-3 actions" @click="deleteModal = true">
+                        <div v-if="post.user_id === currentUser.id">
+                            <i class="fas fa-trash-alt"></i>
+                        </div>
+                    </div>
+                </div>
+                <div v-else>
+                    ログインするといいねやコメントなどが可能になります
+                </div>
+                </div>
+                <hr>
+                <div class="comment_form　fixed-bottom" v-if="showForm">
+                    <form @submit.prevent='postComment'>
+                        <div class="row pl-3 pr-3">
+                            <div class="col-1 p-2">
+                                <i class="fas fa-user-circle icon"></i>
+                            </div>
+                            <div class="col-11 p-2">
+                                <textarea class="form-control" rows="2" placeholder="MESSAGE" v-model="comment.content"></textarea>
+                                <br>
+                                <div class="actions text-right">
+                                    <div v-if="comment.content !== ''">
+                                        <button class="btn btn-info">
+                                            <i class="fas fa-dove"></i>
+                                        </button>
+                                    </div>
+                                    <div v-else>
+                                        <span class="dummy btn btn-info">
+                                            <i class="fas fa-dove"></i>
+                                        </span>
+                                    </div>
+                                    
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div v-for="comment in commentLists" :key="comment.commenter.id + comment.created_at">
+                    <Comment
+                    @set="getPostDetail"
+                    :id="comment.id"
+                    :commenter='comment.commenter.name'
+                    :commenter_id='comment.commenter.id'
+                    :content='comment.content'
+                    :created_at='comment.created_at'></Comment>
+                </div>
         </div>
-        <hr>
     </div>
 </template>
 
 <script>
 import Post from '../components/posts/Post'
+import Comment from '../components/posts/Comment'
 export default {
     computed:{
+        isLogin(){
+            return this.$store.getters['auth/check']
+        },
         currentUser(){
             return this.$store.getters['auth/user']
+        },
+        commentLists(){
+            return this.post.comments
         }
     },
     components:{
         Post,
+        Comment
     },
     props:['postId' , 'user'],
     data(){
         return{
+            showForm:false,
             loading:false,
             post:null,
             deleteModal:false,
+            comment:{
+                content:'',
+            }
         }
     },
     created(){
@@ -92,11 +145,24 @@ export default {
             })
         },
         deletePost(){
-            if(this.post.user_id === this.user.id){
+           // if(this.post.user_id === this.user.id){
                     axios.post(`/api/posts/delete/${this.postId}`).then(response => {
                     this.$router.push('/')
                 })
-            } 
+            //} 
+        },
+        postComment(){
+             axios.post(`/api/posts/${this.postId}/comments` , {content:this.comment.content}).then(response => {
+                    console.log(response)
+                    this.getPostDetail()
+                    this.showForm = false
+                })
+
+                this.comment.content = ''
+        },
+        formCall(judge){
+            this.showForm =!judge
+            console.log(this.showForm)
         }
     },
 }
@@ -116,13 +182,16 @@ export default {
         transition:opacity 0.3s;
     }
     .main{
-        position:relative;
+        /* height:100vh;
+        overflow: scroll;
+        position:relative; */
     }
     .modal_cover{
         background: rgba(0,0,0,0.5);
         height: 100vh;
         position: absolute;
         width: 100%;
+         z-index:14;
     }
     .modal_content{
         z-index:15;
@@ -142,4 +211,30 @@ export default {
         text-align:center;
         
     }
+
+     .icon{
+            font-size: 3rem;
+        }
+
+    textarea{
+        border:none;
+         resize: none;
+    }
+    .post_area,
+    .post_form{
+        background: white;
+    }
+    .dummy{
+        /* color:white;
+        font-weight: bold; */
+        opacity:0.5;
+    }
+    /* .comment_form{
+        position:absolute;
+        bottom:0;
+    } */
+    .form_active{
+        color:brown;
+    }
+  
 </style>

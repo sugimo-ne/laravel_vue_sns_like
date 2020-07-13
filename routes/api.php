@@ -30,4 +30,6 @@ Route::get('/posts', 'PostController@index')->name('post.index');
 Route::get('/posts/{id}' , 'PostController@show')->name('post.show');
 Route::post('/posts', 'PostController@create')->name('post.create');
 Route::post('/posts/delete/{id}' , 'PostController@delete')->name('post.delete');
+Route::post('/posts/{post}/comments' , 'PostController@addComment')->name('post.comment');
+Route::post('/posts/{id}/comments/delete' , 'PostController@deleteComment')->name('post.deleteComment');
 

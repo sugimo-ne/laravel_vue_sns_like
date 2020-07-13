@@ -13,16 +13,21 @@ const router = new VueRouter({
     routes:[
         {
             path:'/',
-            component:Home
+            component:Home,
+            name:'Home',
+            props:true
         },
         {
             path:'/500',
-            component:SystemError
+            component:SystemError,
+            name:'error',
+            props:true
         },
         {
             path:'/:user/:postId',
             component:PostDetail,
-            props: true
+            name:'詳細',
+            props:true
         }
     ]
 })

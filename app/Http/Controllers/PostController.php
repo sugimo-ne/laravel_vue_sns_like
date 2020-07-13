@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\PostRequest;
+use App\Http\Requests\StoreComment;
 use App\Post;
 use App\User;
+use App\Comment;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 // use Illuminate\Support\Facades\Storage;
@@ -31,7 +33,7 @@ class PostController extends Controller
 
     public function show(string $id)
     {
-        $post = Post::where('id' , $id)->with(['user'])->first();
+        $post = Post::where('id' , $id)->with(['user' , 'comments.commenter'])->first();
 
         return $post ?? abort(404);
     }
@@ -59,5 +61,26 @@ class PostController extends Controller
             return false;
         }
         
+    }
+    public function addComment(StoreComment $request , Post $post){
+        $comment = new Comment();
+        $comment->content = $request->get('content');
+        $comment->user_id = Auth::user()->id;
+        $post->comments()->save($comment);
+
+        $new_comment = Comment::where('id', $comment->id)->with('commenter')->first();
+
+        return response($new_comment, 201);
+    }
+
+    public function deleteComment(string $id)
+    {
+        $user = Auth::user()->id;
+        $comment = Comment::where('id' , $id)->first();
+        if($comment->user_id === $user){
+            $comment->delete();
+        }else{
+            return false;
+        }
     }
 }

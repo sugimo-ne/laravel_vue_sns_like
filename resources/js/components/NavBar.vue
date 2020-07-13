@@ -1,7 +1,7 @@
 <template>
     <div class="nav row border-bottom no-gutters">
         <div class="col-8">
-            <h1>nav</h1>
+            <h1>{{title}}</h1>
         </div>
         <div class="col-4 text-right">
             <div class="p-3" v-if='!isLogin'>
@@ -19,7 +19,12 @@
 
 <script>
 export default {
-    props:['isLogin' , 'user'],
+    props:['isLogin' , 'user' ],
+    computed:{
+        title(){
+            return this.$route.name
+        }
+    },
     mounted(){
         console.log(this.isLogin)
     },
