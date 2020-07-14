@@ -2224,12 +2224,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {},
   props: {
     id: Number,
     content: String,
     created_at: String,
-    name: String
+    name: String,
+    number: Number
   }
 });
 
@@ -2244,7 +2247,18 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Post__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Post */ "./resources/js/components/posts/Post.vue");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Post__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Post */ "./resources/js/components/posts/Post.vue");
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../util */ "./resources/js/util.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
 //
 //
 //
@@ -2273,9 +2287,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      likeCount: null,
+      isLike: false
+    };
+  },
+  mounted: function mounted() {
+    this.likeCount = this.likes_count;
+    this.isLike = this.liked_by_user;
+  },
+  computed: {
+    commentCount: function commentCount() {
+      return this.comments.length;
+    }
+  },
   components: {
-    Post: _Post__WEBPACK_IMPORTED_MODULE_0__["default"]
+    Post: _Post__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   props: {
     id: Number,
@@ -2283,13 +2313,96 @@ __webpack_require__.r(__webpack_exports__);
     created_at: String,
     user: {
       name: String
-    }
+    },
+    login: Boolean,
+    comments: Array,
+    liked_by_user: Boolean,
+    likes_count: Number
   },
   methods: {
     pushPostView: function pushPostView() {
       var postId = this.id;
       var user = this.user.name;
       this.$router.push("/".concat(user, "/").concat(postId));
+    },
+    likeCheck: function likeCheck() {
+      if (this.isLike) {
+        this.unlike();
+      } else {
+        this.like();
+      }
+    },
+    like: function like() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return axios.put("/api/posts/".concat(_this.id, "/like"));
+
+              case 2:
+                response = _context.sent;
+
+                if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_2__["OK"])) {
+                  _context.next = 8;
+                  break;
+                }
+
+                _this.$store.commit("error/setErrorCode", response.status);
+
+                return _context.abrupt("return", false);
+
+              case 8:
+                _this.likeCount++;
+                _this.isLike = true;
+
+              case 10:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    unlike: function unlike() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return axios["delete"]("/api/posts/".concat(_this2.id, "/like"));
+
+              case 2:
+                response = _context2.sent;
+
+                if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_2__["OK"])) {
+                  _context2.next = 8;
+                  break;
+                }
+
+                _this2.$store.commit("error/setErrorCode", response.status);
+
+                return _context2.abrupt("return", false);
+
+              case 8:
+                _this2.likeCount--;
+                _this2.isLike = false;
+
+              case 10:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
     }
   }
 });
@@ -2570,7 +2683,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _components_posts_Posts__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/posts/Posts */ "./resources/js/components/posts/Posts.vue");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _components_posts_Posts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/posts/Posts */ "./resources/js/components/posts/Posts.vue");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
 //
 //
 //
@@ -2625,20 +2749,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   computed: {
     isLogin: function isLogin() {
-      return this.$store.getters['auth/check'];
+      return this.$store.getters["auth/check"];
     }
   },
   components: {
-    Posts: _components_posts_Posts__WEBPACK_IMPORTED_MODULE_0__["default"]
+    Posts: _components_posts_Posts__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   data: function data() {
     return {
       loading: false,
       posts: [],
+      commentCount: 0,
       postData: {
-        content: '',
-        filename: '' // user_id:this.$store.getters['auth/user'].id,
-
+        content: "",
+        filename: ""
       }
     };
   },
@@ -2651,7 +2775,7 @@ __webpack_require__.r(__webpack_exports__);
 
       this.loading = true;
       console.log(this.postData);
-      this.postData.user_id = this.$store.getters['auth/user'].id, axios.post('/api/posts', this.postData).then(function (response) {
+      this.postData.user_id = this.$store.getters["auth/user"].id, axios.post("/api/posts", this.postData).then(function (response) {
         console.log(response);
         _this.postData.content = "";
 
@@ -2662,13 +2786,92 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       this.loading = true;
-      axios.get('/api/posts').then(function (response) {
-        console.log(response.data.data);
+      axios.get("/api/posts").then(function (response) {
         _this2.posts = response.data.data;
+        console.log(_this2.posts);
         _this2.loading = false;
       })["catch"](function (e) {
-        console.log('error');
+        console.log("error");
       });
+    },
+    likeCheck: function likeCheck() {
+      if (this.liked_by_user) {
+        this.unlike();
+      } else {
+        this.like();
+      }
+    },
+    like: function like() {
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return axios.put("/api/posts/".concat(_this3.id, "/like"));
+
+              case 2:
+                response = _context.sent;
+
+                if (!(response.status !== OK)) {
+                  _context.next = 8;
+                  break;
+                }
+
+                _this3.$store.commit("error/setErrorCode", response.status);
+
+                return _context.abrupt("return", false);
+
+              case 8:
+                _this3.likes_count++;
+                _this3.liked_by_user = true;
+
+              case 10:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    unlike: function unlike() {
+      var _this4 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return axios["delete"]("/api/posts/".concat(_this4.id, "/like"));
+
+              case 2:
+                response = _context2.sent;
+
+                if (!(response.status !== OK)) {
+                  _context2.next = 8;
+                  break;
+                }
+
+                _this4.$store.commit("error/setErrorCode", response.status);
+
+                return _context2.abrupt("return", false);
+
+              case 8:
+                _this4.likes_count--;
+                _this4.liked_by_user = false;
+
+              case 10:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
     }
   }
 });
@@ -2684,8 +2887,17 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _components_posts_Post__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/posts/Post */ "./resources/js/components/posts/Post.vue");
-/* harmony import */ var _components_posts_Comment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/posts/Comment */ "./resources/js/components/posts/Comment.vue");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../util */ "./resources/js/util.js");
+/* harmony import */ var _components_posts_Post__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/posts/Post */ "./resources/js/components/posts/Post.vue");
+/* harmony import */ var _components_posts_Comment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/posts/Comment */ "./resources/js/components/posts/Comment.vue");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -2789,25 +3001,37 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   computed: {
     isLogin: function isLogin() {
-      return this.$store.getters['auth/check'];
+      return this.$store.getters["auth/check"];
     },
     currentUser: function currentUser() {
-      return this.$store.getters['auth/user'];
+      return this.$store.getters["auth/user"];
     },
     commentLists: function commentLists() {
       return this.post.comments;
-    }
+    },
+    commentCount: function commentCount() {
+      return this.commentLists.length;
+    } // likeCount(){
+    //     return this.post.likes.length
+    // }
+
   },
   components: {
-    Post: _components_posts_Post__WEBPACK_IMPORTED_MODULE_0__["default"],
-    Comment: _components_posts_Comment__WEBPACK_IMPORTED_MODULE_1__["default"]
+    Post: _components_posts_Post__WEBPACK_IMPORTED_MODULE_2__["default"],
+    Comment: _components_posts_Comment__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
-  props: ['postId', 'user'],
+  props: ["postId", "user"],
   data: function data() {
     return {
       showForm: false,
@@ -2815,7 +3039,7 @@ __webpack_require__.r(__webpack_exports__);
       post: null,
       deleteModal: false,
       comment: {
-        content: ''
+        content: ""
       }
     };
   },
@@ -2836,10 +3060,9 @@ __webpack_require__.r(__webpack_exports__);
     deletePost: function deletePost() {
       var _this2 = this;
 
-      // if(this.post.user_id === this.user.id){
       axios.post("/api/posts/delete/".concat(this.postId)).then(function (response) {
-        _this2.$router.push('/');
-      }); //} 
+        _this2.$router.push("/");
+      });
     },
     postComment: function postComment() {
       var _this3 = this;
@@ -2853,11 +3076,90 @@ __webpack_require__.r(__webpack_exports__);
 
         _this3.showForm = false;
       });
-      this.comment.content = '';
+      this.comment.content = "";
     },
     formCall: function formCall(judge) {
       this.showForm = !judge;
       console.log(this.showForm);
+    },
+    likeCheck: function likeCheck() {
+      if (this.post.liked_by_user) {
+        this.unlike();
+      } else {
+        this.like();
+      }
+    },
+    like: function like() {
+      var _this4 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return axios.put("/api/posts/".concat(_this4.postId, "/like"));
+
+              case 2:
+                response = _context.sent;
+
+                if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
+                  _context.next = 8;
+                  break;
+                }
+
+                _this4.$store.commit("error/setErrorCode", response.status);
+
+                return _context.abrupt("return", false);
+
+              case 8:
+                _this4.post.likes_count++;
+                _this4.post.liked_by_user = true;
+
+              case 10:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    unlike: function unlike() {
+      var _this5 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return axios["delete"]("/api/posts/".concat(_this5.postId, "/like"));
+
+              case 2:
+                response = _context2.sent;
+
+                if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
+                  _context2.next = 8;
+                  break;
+                }
+
+                _this5.$store.commit("error/setErrorCode", response.status);
+
+                return _context2.abrupt("return", false);
+
+              case 8:
+                _this5.post.likes_count--;
+                _this5.post.liked_by_user = false;
+
+              case 10:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
     }
   }
 });
@@ -2971,7 +3273,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\ni[data-v-16291007]{\n      font-size: 3rem;\n}\n.owner[data-v-16291007]{\n      font-size:0.8rem;\n      font-weight:bold;\n}\n  /* .select{\n      transition: 0.4s;\n  }\n  .select:hover{\n      background:rgba(215, 218, 235, 0.4)\n  } */\n\n", ""]);
+exports.push([module.i, "\ni[data-v-16291007] {\n  font-size: 3rem;\n}\n.owner[data-v-16291007] {\n  font-size: 0.8rem;\n  font-weight: bold;\n}\n", ""]);
 
 // exports
 
@@ -2990,7 +3292,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\ni[data-v-9ab6dc08]{\n      font-size: 3rem;\n}\n.owner[data-v-9ab6dc08]{\n      font-size:0.8rem;\n      font-weight:bold;\n}\n.select[data-v-9ab6dc08]{\n      transition: 0.4s;\n}\n.select[data-v-9ab6dc08]:hover{\n      background:rgba(215, 218, 235, 0.4)\n}\n\n", ""]);
+exports.push([module.i, "\ni[data-v-9ab6dc08] {\n  font-size: 3rem;\n}\n.owner[data-v-9ab6dc08] {\n  font-size: 0.8rem;\n  font-weight: bold;\n}\n.select[data-v-9ab6dc08] {\n  transition: 0.4s;\n}\n.select[data-v-9ab6dc08]:hover {\n  background: rgba(215, 218, 235, 0.4);\n}\n.actions i[data-v-9ab6dc08] {\n  font-size: 1rem;\n}\n", ""]);
 
 // exports
 
@@ -3047,7 +3349,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\nul[data-v-63cd6604]{\n    padding:0;\n    list-style-type: none;\n}\n.icon[data-v-63cd6604]{\n        font-size: 3rem;\n}\ntextarea[data-v-63cd6604]{\n    border:none;\n     resize: none;\n}\n.back[data-v-63cd6604]{\n    background: rgb(240, 240, 240);\n}\n.post_area[data-v-63cd6604],\n.post_form[data-v-63cd6604]{\n    background: white;\n}\n.dummy[data-v-63cd6604]{\n    /* color:white;\n    font-weight: bold; */\n    opacity:0.5;\n}\n", ""]);
+exports.push([module.i, "\nul[data-v-63cd6604] {\n  padding: 0;\n  list-style-type: none;\n}\n.icon[data-v-63cd6604] {\n  font-size: 3rem;\n}\ntextarea[data-v-63cd6604] {\n  border: none;\n  resize: none;\n}\n.back[data-v-63cd6604] {\n  background: rgb(240, 240, 240);\n}\n.post_area[data-v-63cd6604],\n.post_form[data-v-63cd6604] {\n  background: white;\n}\n.dummy[data-v-63cd6604] {\n  /* color:white;\n        font-weight: bold; */\n  opacity: 0.5;\n}\n", ""]);
 
 // exports
 
@@ -3066,7 +3368,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.fade-enter[data-v-f1451a20],\n.fade-leave-to[data-v-f1451a20]{\n    opacity: 0;\n}\n.fade-enter-to[data-v-f1451a20],\n.fade-leave[data-v-f1451a20]{\n    opacity:1;\n}\n.fade-enter-active[data-v-f1451a20],\n.fade-leave-active[data-v-f1451a20]{\n    transition:opacity 0.3s;\n}\n.main[data-v-f1451a20]{\n    /* height:100vh;\n    overflow: scroll;\n    position:relative; */\n}\n.modal_cover[data-v-f1451a20]{\n    background: rgba(0,0,0,0.5);\n    height: 100vh;\n    position: absolute;\n    width: 100%;\n     z-index:14;\n}\n.modal_content[data-v-f1451a20]{\n    z-index:15;\n    position: absolute;\n    top: 50%;\n    transform: translate(-50%,-50%);\n    left: 50%;\n    background:white;\n    padding: 40px;\n    width: 60%;\n}\n.info[data-v-f1451a20]{\n    font-size: 0.7rem;\n    font-weight:bold;\n}\n.actions[data-v-f1451a20]{\n    text-align:center;\n}\n.icon[data-v-f1451a20]{\n        font-size: 3rem;\n}\ntextarea[data-v-f1451a20]{\n    border:none;\n     resize: none;\n}\n.post_area[data-v-f1451a20],\n.post_form[data-v-f1451a20]{\n    background: white;\n}\n.dummy[data-v-f1451a20]{\n    /* color:white;\n    font-weight: bold; */\n    opacity:0.5;\n}\n/* .comment_form{\n    position:absolute;\n    bottom:0;\n} */\n.form_active[data-v-f1451a20]{\n    color:brown;\n}\n\n", ""]);
+exports.push([module.i, "\n.fade-enter[data-v-f1451a20],\n.fade-leave-to[data-v-f1451a20] {\n  opacity: 0;\n}\n.fade-enter-to[data-v-f1451a20],\n.fade-leave[data-v-f1451a20] {\n  opacity: 1;\n}\n.fade-enter-active[data-v-f1451a20],\n.fade-leave-active[data-v-f1451a20] {\n  transition: opacity 0.3s;\n}\n.main[data-v-f1451a20] {\n  /* height:100vh;\n        overflow: scroll;\n        position:relative; */\n}\n.modal_cover[data-v-f1451a20] {\n  background: rgba(0, 0, 0, 0.5);\n  height: 100vh;\n  position: absolute;\n  width: 100%;\n  z-index: 14;\n}\n.modal_content[data-v-f1451a20] {\n  z-index: 15;\n  position: absolute;\n  top: 50%;\n  transform: translate(-50%, -50%);\n  left: 50%;\n  background: white;\n  padding: 40px;\n  width: 60%;\n}\n.info[data-v-f1451a20] {\n  font-size: 0.7rem;\n  font-weight: bold;\n}\n.actions[data-v-f1451a20] {\n  text-align: center;\n}\n.icon[data-v-f1451a20] {\n  font-size: 3rem;\n}\ntextarea[data-v-f1451a20] {\n  border: none;\n  resize: none;\n}\n.post_area[data-v-f1451a20],\n.post_form[data-v-f1451a20] {\n  background: white;\n}\n.dummy[data-v-f1451a20] {\n  /* color:white;\n        font-weight: bold; */\n  opacity: 0.5;\n}\n/* .comment_form{\n        position:absolute;\n        bottom:0;\n    } */\n.form_active[data-v-f1451a20] {\n  color: brown;\n}\n", ""]);
 
 // exports
 
@@ -22615,21 +22917,19 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "select" }, [
+  return _c("div", [
     _c("div", { staticClass: "row no-gutters p-2" }, [
       _vm._m(0),
       _vm._v(" "),
       _c("div", { staticClass: "col-11 pl-2" }, [
         _c("span", { staticClass: "owner" }, [
           _c("span", { staticClass: "mr-5" }, [_vm._v(_vm._s(_vm.name))]),
-          _vm._v(_vm._s(_vm.created_at))
+          _vm._v("\n        " + _vm._s(_vm.created_at) + "\n      ")
         ]),
         _vm._v(" "),
         _c("br"),
         _vm._v(" "),
-        _c("p", { staticClass: "pl-3 pt-2" }, [
-          _vm._v("\n                " + _vm._s(_vm.content) + "\n            ")
-        ])
+        _c("p", { staticClass: "pl-3 pt-2" }, [_vm._v(_vm._s(_vm.content))])
       ])
     ])
   ])
@@ -22667,21 +22967,47 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { on: { click: _vm.pushPostView } },
-    [
-      _c("Post", {
-        attrs: {
-          id: _vm.id,
-          content: _vm.content,
-          created_at: _vm.created_at,
-          name: _vm.user.name
-        }
-      })
-    ],
-    1
-  )
+  return _c("div", [
+    _c("div", { staticClass: "select" }, [
+      _c(
+        "div",
+        { staticClass: "push", on: { click: _vm.pushPostView } },
+        [
+          _c("Post", {
+            staticClass: "position",
+            attrs: {
+              id: _vm.id,
+              content: _vm.content,
+              created_at: _vm.created_at,
+              name: _vm.user.name
+            }
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _vm.login
+        ? _c("div", { staticClass: "row items p-1" }, [
+            _c("div", { staticClass: "offset-3" }),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-3 actions" }, [
+              _c("i", {
+                staticClass: "fas fa-heart pr-1",
+                on: { click: _vm.likeCheck }
+              }),
+              _vm._v("\n        " + _vm._s(_vm.likeCount) + "\n      ")
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-3 actions" }, [
+              _c("i", { staticClass: "far fa-comment-dots pr-1" }),
+              _vm._v("\n        " + _vm._s(_vm.commentCount) + "\n      ")
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "offset-3" })
+          ])
+        : _vm._e()
+    ])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -23130,7 +23456,7 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "post_area" }, [
       _vm.loading
-        ? _c("div", [_vm._v("\n            now loading...\n        ")])
+        ? _c("div", [_vm._v("now loading...")])
         : _c("div", [
             _c(
               "ul",
@@ -23138,7 +23464,23 @@ var render = function() {
                 return _c(
                   "li",
                   { key: post.id, staticClass: "border-bottom" },
-                  [_c("Posts", _vm._b({}, "Posts", post, false))],
+                  [
+                    _c(
+                      "Posts",
+                      _vm._b(
+                        {
+                          attrs: {
+                            login: _vm.isLogin,
+                            commentCount: _vm.commentCount,
+                            comments: post.comments
+                          }
+                        },
+                        "Posts",
+                        post,
+                        false
+                      )
+                    )
+                  ],
                   1
                 )
               }),
@@ -23219,7 +23561,7 @@ var render = function() {
                             }
                           }
                         },
-                        [_vm._v("＜　戻る")]
+                        [_vm._v("＜ 戻る")]
                       )
                     ]),
                     _vm._v(" "),
@@ -23241,7 +23583,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _vm.loading
-        ? _c("div", [_vm._v("\n        now loading...\n    ")])
+        ? _c("div", [_vm._v("now loading...")])
         : _c(
             "div",
             [
@@ -23251,6 +23593,7 @@ var render = function() {
                 [
                   _c("Post", {
                     attrs: {
+                      commentCount: _vm.commentCount,
                       id: _vm.post.id,
                       content: _vm.post.content,
                       created_at: _vm.post.created_at,
@@ -23260,17 +23603,38 @@ var render = function() {
                   _vm._v(" "),
                   _c("hr"),
                   _vm._v(" "),
-                  _vm._m(0),
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-3 actions" }, [
+                      _c("span", { staticClass: "info" }, [_vm._v("いいね")]),
+                      _vm._v(
+                        "\n          " +
+                          _vm._s(_vm.post.likes_count) +
+                          "\n        "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-3 actions" }, [
+                      _c("span", { staticClass: "info" }, [_vm._v("コメント")]),
+                      _vm._v(
+                        "\n          " + _vm._s(_vm.commentCount) + "\n        "
+                      )
+                    ])
+                  ]),
                   _vm._v(" "),
                   _c("hr"),
                   _vm._v(" "),
                   _vm.isLogin
                     ? _c("div", { staticClass: "row" }, [
-                        _vm._m(1),
+                        _c("div", { staticClass: "col-3 actions" }, [
+                          _c("i", {
+                            staticClass: "fas fa-heart pr-1",
+                            on: { click: _vm.likeCheck }
+                          })
+                        ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "col-3 actions" }, [
                           _c("i", {
-                            staticClass: "far fa-comment-dots",
+                            staticClass: "far fa-comment-dots pr-1",
                             class: { form_active: _vm.showForm == true },
                             on: {
                               click: function($event) {
@@ -23303,7 +23667,7 @@ var render = function() {
                       ])
                     : _c("div", [
                         _vm._v(
-                          "\n                ログインするといいねやコメントなどが可能になります\n            "
+                          "ログインするといいねやコメントなどが可能になります"
                         )
                       ])
                 ],
@@ -23326,7 +23690,7 @@ var render = function() {
                       },
                       [
                         _c("div", { staticClass: "row pl-3 pr-3" }, [
-                          _vm._m(2),
+                          _vm._m(0),
                           _vm._v(" "),
                           _c("div", { staticClass: "col-11 p-2" }, [
                             _c("textarea", {
@@ -23359,8 +23723,8 @@ var render = function() {
                             _vm._v(" "),
                             _c("div", { staticClass: "actions text-right" }, [
                               _vm.comment.content !== ""
-                                ? _c("div", [_vm._m(3)])
-                                : _c("div", [_vm._m(4)])
+                                ? _c("div", [_vm._m(1)])
+                                : _c("div", [_vm._m(2)])
                             ])
                           ])
                         ])
@@ -23396,28 +23760,6 @@ var render = function() {
   )
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-3 actions" }, [
-        _c("span", { staticClass: "info" }, [_vm._v("いいね")])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-3 actions" }, [
-        _c("span", { staticClass: "info" }, [_vm._v("コメント")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-3 actions" }, [
-      _c("i", { staticClass: "fas fa-heart" })
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

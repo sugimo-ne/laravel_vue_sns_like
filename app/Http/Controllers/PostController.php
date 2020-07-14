@@ -25,7 +25,7 @@ class PostController extends Controller
         //->paginate();
         //$posts = Post::all()->sortByDesc('created_at');
 
-        $posts = Post::with(['user'])
+        $posts = Post::with(['user' , 'likes' , 'comments'])
         ->orderBy(Post::CREATED_AT, 'desc')->paginate();
 
         return $posts;
@@ -33,7 +33,7 @@ class PostController extends Controller
 
     public function show(string $id)
     {
-        $post = Post::where('id' , $id)->with(['user' , 'comments.commenter'])->first();
+        $post = Post::where('id' , $id)->with(['user' , 'comments.commenter' , 'likes'])->first();
 
         return $post ?? abort(404);
     }
@@ -82,5 +82,32 @@ class PostController extends Controller
         }else{
             return false;
         }
+    }
+
+    public function like(string $id)
+    {
+        $post = Post::Where('id' , $id)->with('likes')->first();
+
+        if(!$post){
+            abort(404);
+        }
+
+        $post->likes()->detach(Auth::user()->id);
+        $post->likes()->attach(Auth::user()->id);
+
+        return ["photo_id" => $id];
+    }
+
+    public function unlike(string $id)
+    {
+        $post = Post::Where('id' , $id)->with('likes')->first();
+
+        if(!$post){
+            abort(404);
+        }
+
+        $post->likes()->detach(Auth::user()->id);
+
+        return ["photo_id" => $id];
     }
 }

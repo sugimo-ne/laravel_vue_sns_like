@@ -32,4 +32,6 @@ Route::post('/posts', 'PostController@create')->name('post.create');
 Route::post('/posts/delete/{id}' , 'PostController@delete')->name('post.delete');
 Route::post('/posts/{post}/comments' , 'PostController@addComment')->name('post.comment');
 Route::post('/posts/{id}/comments/delete' , 'PostController@deleteComment')->name('post.deleteComment');
+Route::put('/posts/{id}/like' , 'PostController@like')->name('post.like');
+Route::delete('/posts/{id}/like' , 'PostController@unlike');
 
