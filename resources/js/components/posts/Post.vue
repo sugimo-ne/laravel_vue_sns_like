@@ -2,7 +2,7 @@
   <div>
     <div class="row no-gutters p-2">
       <div class="col-1 text-center p-2">
-        <i class="fas fa-user-circle"></i>
+        <i class="fas fa-user-circle" @click="goUser(user_id)"></i>
         <br />
       </div>
       <div class="col-11 pl-2">
@@ -20,6 +20,9 @@
 <script>
 export default {
   methods: {
+    goUser(id){
+      this.$router.push(`/${id}`)
+    }
   },
   props: {
     id: Number,
@@ -27,6 +30,7 @@ export default {
     created_at: String,
     name: String,
     number: Number, 
+    user_id: Number
   }
 };
 </script>

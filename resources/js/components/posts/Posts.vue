@@ -11,10 +11,10 @@
         >
         </Post>
       </div>
-      <div class="row items p-1" v-if="login">
+      <div class="row items p-1">
         <div class="offset-3"></div>
         <div class="col-3 actions">
-          <i class="fas fa-heart pr-1" @click="likeCheck"></i>
+          <i class="fas fa-heart pr-1" @click="likeCheck" :class="{'liked':isLike}"></i>
           {{likeCount}}
         </div>
         <div class="col-3 actions">
@@ -67,13 +67,17 @@ export default {
       let user = this.user.name;
       this.$router.push(`/${user}/${postId}`);
     },
-
     likeCheck() {
-      if (this.isLike) {
-        this.unlike();
-      } else {
-        this.like();
+      if(this.login){
+          if (this.isLike) {
+          this.unlike();
+        } else {
+          this.like();
+        }
+      }else{
+        console.log('loginセイ')
       }
+     
     },
     async like() {
       const response = await axios.put(`/api/posts/${this.id}/like`);
@@ -85,7 +89,6 @@ export default {
         this.isLike = true;
       }
     },
-
     async unlike() {
       const response = await axios.delete(`/api/posts/${this.id}/like`);
       if (response.status !== OK) {
@@ -104,7 +107,6 @@ export default {
 i {
   font-size: 3rem;
 }
-
 .owner {
   font-size: 0.8rem;
   font-weight: bold;
@@ -117,5 +119,9 @@ i {
 }
 .actions i {
   font-size: 1rem;
+}
+.liked{
+  transition: 0.7s;
+  color:rgba(233, 40, 40, 0.74);
 }
 </style>

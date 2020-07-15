@@ -27,6 +27,7 @@
           :content="post.content"
           :created_at="post.created_at"
           :name="post.user.name"
+          :user_id="post.user.id"
         ></Post>
         <hr />
         <div class="row">
@@ -43,7 +44,7 @@
         <hr />
         <div class="row" v-if="isLogin">
           <div class="col-3 actions">
-            <i class="fas fa-heart pr-1" @click="likeCheck"></i>
+            <i class="fas fa-heart pr-1" @click="likeCheck" :class="{'liked':post.liked_by_user}"></i>
           </div>
           <div class="col-3 actions">
             <i
@@ -276,5 +277,10 @@ textarea {
     } */
 .form_active {
   color: brown;
+}
+
+.liked{
+  transition: 0.7s;
+  color:rgba(233, 40, 40, 0.74);
 }
 </style>

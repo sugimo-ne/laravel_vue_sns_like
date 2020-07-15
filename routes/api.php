@@ -35,3 +35,7 @@ Route::post('/posts/{id}/comments/delete' , 'PostController@deleteComment')->nam
 Route::put('/posts/{id}/like' , 'PostController@like')->name('post.like');
 Route::delete('/posts/{id}/like' , 'PostController@unlike');
 
+//ユーザー系
+Route::get('/user/{id}' , 'UserController@show')->name('user.show');
+Route::get('/user/likes/{id}' , 'UserController@likes')->name('user.likes');
+

@@ -100,34 +100,34 @@ export default {
           console.log("error");
         });
     },
-    likeCheck() {
-      if (this.liked_by_user) {
-        this.unlike();
-      } else {
-        this.like();
-      }
-    },
-    async like() {
-      const response = await axios.put(`/api/posts/${this.id}/like`);
-      if (response.status !== OK) {
-        this.$store.commit("error/setErrorCode", response.status);
-        return false;
-      } else {
-        this.likes_count++;
-        this.liked_by_user = true;
-      }
-    },
+    // likeCheck() {
+    //   if (this.liked_by_user) {
+    //     this.unlike();
+    //   } else {
+    //     this.like();
+    //   }
+    // },
+    // async like() {
+    //   const response = await axios.put(`/api/posts/${this.id}/like`);
+    //   if (response.status !== OK) {
+    //     this.$store.commit("error/setErrorCode", response.status);
+    //     return false;
+    //   } else {
+    //     this.likes_count++;
+    //     this.liked_by_user = true;
+    //   }
+    // },
 
-    async unlike() {
-      const response = await axios.delete(`/api/posts/${this.id}/like`);
-      if (response.status !== OK) {
-        this.$store.commit("error/setErrorCode", response.status);
-        return false;
-      } else {
-        this.likes_count--;
-        this.liked_by_user = false;
-      }
-    }
+    // async unlike() {
+    //   const response = await axios.delete(`/api/posts/${this.id}/like`);
+    //   if (response.status !== OK) {
+    //     this.$store.commit("error/setErrorCode", response.status);
+    //     return false;
+    //   } else {
+    //     this.likes_count--;
+    //     this.liked_by_user = false;
+    //   }
+    // }
   }
 };
 </script>

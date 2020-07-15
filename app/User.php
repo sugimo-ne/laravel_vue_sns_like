@@ -5,6 +5,9 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Authenticatable
 {
@@ -37,11 +40,20 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function posts()
+    public function posts():hasMany
     {
-        return $this->hasMany('App\Post');
+        return $this->hasMany('App\Post')->orderBy('id', 'desc');
     }
+
+    public function likes(): BelongsToMany
+    {
+        return $this->belongsToMany('App\Post', 'likes')->withTimestamps();
+    }
+
     protected $visible = [
-        'name','id' , 'image'
+        'name','id' , 'image' , 
+    ];
+    protected $appends = [
+        'posts',
     ];
 }
