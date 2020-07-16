@@ -18,11 +18,24 @@ class UserController extends Controller
         return ['user' => $user , 'posts' => $posts , 'Comments' => $Comments];
     }
 
+    public function Comments(string $id)
+    {
+        $Comments = Comment::where('user_id' , $id)->get();
+        
+        return $Comments;
+    }
+
     public function likes(string $id)
     {
         $user = User::where('id' , $id)->first();
         $likes = $user->likes->sortByDesc('created_at');
 
-        return ['user' => $user , 'likes' => $likes];
+        return  $likes;
+    }
+
+    public function info(string $id)
+    {
+        $user = User::where('id' , $id)->first();
+        return $user;
     }
 }

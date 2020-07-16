@@ -21,7 +21,7 @@
 export default {
   methods: {
     goUser(id){
-      this.$router.push(`/${id}`)
+      this.$router.push(`/${id}/user/profile/posts`)
     }
   },
   props: {

@@ -13,7 +13,7 @@ class Post extends Model
 {
 
     // protected $visible = [
-    //     'id', 'user', 'comments',
+    //     'id', 'user', 'comments','likes','content','created_at', 
     //     'likes_count', 'liked_by_user',
     // ];
 

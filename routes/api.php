@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,4 +39,5 @@ Route::delete('/posts/{id}/like' , 'PostController@unlike');
 //ユーザー系
 Route::get('/user/{id}' , 'UserController@show')->name('user.show');
 Route::get('/user/likes/{id}' , 'UserController@likes')->name('user.likes');
+Route::get('/{user_id}' , 'UserController@info');
 

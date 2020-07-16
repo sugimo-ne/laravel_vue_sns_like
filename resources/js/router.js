@@ -6,6 +6,10 @@ import PostDetail from './views/PostDetail'
 import SystemError from './views/errors/System'
 import Profile from './views/Profile'
 
+import UsersPosts from './views/children/UsersPosts'
+import UsersComments from './views/children/UsersComments'
+import UsersLikes from './views/children/UsersLikes'
+
 
 Vue.use(VueRouter)
 
@@ -31,10 +35,27 @@ const router = new VueRouter({
             props:true
         },
         {
-            path:'/:id',
+            path:'/:id/user/profile',
             component:Profile,
             name:'プロフィール',
-            props:true
+            props:true,
+            children:[
+                {
+                    path:'posts',
+                    component:UsersPosts,
+                    name:'投稿',
+                },
+                {
+                    path:'comments',
+                    component:UsersComments,
+                    name:'コメント',
+                },
+                {
+                    path:'likes',
+                    component:UsersLikes,
+                    name:'いいね',
+                }
+            ]
         },
 
     ]

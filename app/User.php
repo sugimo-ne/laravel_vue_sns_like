@@ -51,7 +51,7 @@ class User extends Authenticatable
     }
 
     protected $visible = [
-        'name','id' , 'image' , 
+        'name','id' , 'image' , 'intro' , 'created_at'
     ];
     protected $appends = [
         'posts',

@@ -25,7 +25,7 @@
 
 <script>
 export default {
-    props:['commenter' , 'image' , 'content' , 'created_at', 'id' , 'commenter_id'],
+    props:['commenter' , 'image' , 'content' , 'created_at', 'id' , 'commenter_id' , 'post_id'],
     computed:{
         isLogin(){
                 return this.$store.getters['auth/check']
