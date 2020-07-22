@@ -80,6 +80,7 @@ export default {
     methods:{
        async register () {
            await this.$store.dispatch('auth/register', this.registerForm)
+           
             console.log(this.registerError)
         }
     }

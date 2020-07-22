@@ -26,7 +26,7 @@ class PostController extends Controller
         //$posts = Post::all()->sortByDesc('created_at');
 
         $posts = Post::with(['user' , 'likes' , 'comments'])
-        ->orderBy(Post::CREATED_AT, 'desc')->paginate();
+        ->orderBy(Post::CREATED_AT, 'desc')->paginate(15);
 
         return $posts;
     }
@@ -95,7 +95,7 @@ class PostController extends Controller
         $post->likes()->detach(Auth::user()->id);
         $post->likes()->attach(Auth::user()->id);
 
-        return ["photo_id" => $id];
+        return ["post" => $id];
     }
 
     public function unlike(string $id)
@@ -108,6 +108,7 @@ class PostController extends Controller
 
         $post->likes()->detach(Auth::user()->id);
 
-        return ["photo_id" => $id];
+        return ["post" => $id];
     }
+
 }

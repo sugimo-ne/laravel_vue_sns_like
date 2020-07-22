@@ -2,11 +2,11 @@
   <div>
     <div class="row no-gutters p-2">
       <div class="col-1 text-center p-2">
-        <i class="fas fa-user-circle" @click="goUser(user_id)"></i>
+        <i class="fas fa-user-circle "></i>
         <br />
       </div>
       <div class="col-11 pl-2">
-        <span class="owner">
+        <span class="owner ">
           <span class="mr-5">{{name}}</span>
           {{created_at}}
         </span>
@@ -20,9 +20,9 @@
 <script>
 export default {
   methods: {
-    goUser(id){
-      this.$router.push(`/${id}/user/profile/posts`)
-    }
+    // goUser(id){
+    //   this.$router.push(`/${id}/user/profile/posts`)
+    // }
   },
   props: {
     id: Number,
@@ -44,4 +44,5 @@ i {
   font-size: 0.8rem;
   font-weight: bold;
 }
+
 </style>

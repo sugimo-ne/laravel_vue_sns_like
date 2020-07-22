@@ -1,4 +1,5 @@
 import axios from "axios"
+import router from '../router'
 import {OK , INTERNAL_SERVER_ERROR , UNPROCESSABLE_ENTITY , CREATED} from '../util'
 
 const state = {
@@ -37,7 +38,7 @@ const actions = {
       if(response.status === CREATED){
         context.commit('setUser', response.data)
         context.commit('setApiStatus' , true)
-
+        router.push('/')
         return false
       }
       
@@ -55,7 +56,7 @@ const actions = {
         if(response.status === OK){
           context.commit('setApiStatus' , true)
           context.commit('setUser', response.data)
-
+          router.push('/')
           return false
         }
 
@@ -77,6 +78,7 @@ const actions = {
       if (response.status === OK) {
         context.commit('setApiStatus', true)
         context.commit('setUser', null)
+        router.push('/')
         return false
       }
   

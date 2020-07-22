@@ -5,6 +5,7 @@ import Home from './views/Home'
 import PostDetail from './views/PostDetail'
 import SystemError from './views/errors/System'
 import Profile from './views/Profile'
+import Follows from './views/Follows'
 
 import UsersPosts from './views/children/UsersPosts'
 import UsersComments from './views/children/UsersComments'
@@ -33,6 +34,12 @@ const router = new VueRouter({
             component:PostDetail,
             name:'詳細',
             props:true
+        },
+        {
+            path:'/follows/:id/:name',
+            component:Follows,
+            props:true,
+            name:'follows',
         },
         {
             path:'/:id/user/profile',

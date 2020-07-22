@@ -32,7 +32,7 @@ export default {
   components: {
     Post
   },
-  props: ["currentUserId"],
+  props: ["aboutUser"],
   data() {
     return {
       loading: false,
@@ -42,13 +42,13 @@ export default {
   },
   methods: {
     postDtail(id) {
-      this.$router.push(`/from_${this.currentUserId}/${id}`);
+      this.$router.push(`/from_${this.aboutUser}/${id}`);
     }
   },
   created() {
     this.loading = true;
     axios
-      .get(`/api/user/likes/${this.currentUserId}`)
+      .get(`/api/user/likes/${this.aboutUser}`)
       .then(response => {
          this.likes = response.data
         let likes = []

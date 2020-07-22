@@ -47,6 +47,8 @@
         </ul>
       </div>
     </div>
+
+    <p class="bg-light text-center p-4 add_show" @click="addShow">もっとみる</p>
   </div>
 </template>
 
@@ -57,7 +59,10 @@ export default {
   computed: {
     isLogin() {
       return this.$store.getters["auth/check"];
-    }
+    },
+    currentUser() {
+      return this.$store.getters["auth/user"];
+    },
   },
   components: {
     Posts
@@ -66,6 +71,7 @@ export default {
     return {
       loading: false,
       posts: [],
+      page:1,
       commentCount: 0,
       postData: {
         content: "",
@@ -74,32 +80,46 @@ export default {
     };
   },
   created() {
+    this.loading = true;
     this.getPosts();
+    this.loading = false;
   },
   methods: {
     post() {
-      this.loading = true;
       console.log(this.postData);
       (this.postData.user_id = this.$store.getters["auth/user"].id),
         axios.post("/api/posts", this.postData).then(response => {
-          console.log(response);
+          console.log(response)
+          let post = response.data
+          post.user = {name:null}
+          post.user.name = this.currentUser.name
+          post.comments = []
+          this.posts.unshift(post)
           this.postData.content = "";
-          this.getPosts();
         });
     },
     getPosts() {
-      this.loading = true;
       axios
-        .get("/api/posts")
+        .get(`/api/posts/?page=${this.page}`)
         .then(response => {
-          this.posts = response.data.data;
+          // this.posts = response.data.data;
+          response.data.data.forEach(item => {
+            this.posts.push(item)
+          })
+            
           console.log(this.posts);
-          this.loading = false;
+          
         })
         .catch(e => {
           console.log("error");
         });
     },
+    addShow(){
+      console.log('ooooi')
+      this.page++
+      this.getPosts()
+    }
+   
     // likeCheck() {
     //   if (this.liked_by_user) {
     //     this.unlike();
@@ -156,5 +176,12 @@ textarea {
   /* color:white;
         font-weight: bold; */
   opacity: 0.5;
+}
+.add_show{
+  transition: .4s;
+  cursor: pointer;
+}
+.add_show:hover{
+  background: rgba(100, 237, 214, 0.719);
 }
 </style>
