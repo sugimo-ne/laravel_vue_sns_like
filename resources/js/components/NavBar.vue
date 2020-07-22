@@ -1,9 +1,11 @@
 <template>
     <div class="nav row border-bottom no-gutters">
         <div class="col-8">
-            <h1>{{title}}</h1>
+          <i v-if="this.$route.name !== 'Home'" class="fas fa-caret-left back" @click="$router.go(-1)"></i> 
+          <h1>
+              <span v-if="this.$route.name == 'follows'">{{$route.params.name}}/</span>{{title}}</h1>
         </div>
-        <div class="col-4 text-right">
+        <div class="col-4 text-right" @click="toProfile">
             <div class="p-3" v-if='!isLogin'>
                 <i class="fas fa-user-circle"></i>
             guest
@@ -18,6 +20,7 @@
 </template>
 
 <script>
+import router from '../router'
 export default {
     props:['isLogin' , 'user' ],
     computed:{
@@ -28,6 +31,11 @@ export default {
     mounted(){
         console.log(this.isLogin)
     },
+    methods:{
+        toProfile(){
+             router.push(`/${this.user.id}/user/profile/posts`)
+         },
+    }
 }
 </script>
 
@@ -41,6 +49,15 @@ export default {
         height:55px;
         position: fixed;
     }
-
+    .back{
+        border-radius: 50px;
+        padding:12px 20px;
+        font-size:2rem;
+        float: left;
+        transition:0.4s;
+    }
+    .back:hover{
+        background: rgba(128, 128, 128, 0.493);
+    }
 
 </style>

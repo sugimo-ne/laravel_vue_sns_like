@@ -21,6 +21,7 @@
     <div v-if="loading">now loading...</div>
     <div v-else>
       <div class="container">
+        <div class="user_link" @click="goUser()">
         <Post
           :commentCount="commentCount"
           :id="post.id"
@@ -29,6 +30,7 @@
           :name="post.user.name"
           :user_id="post.user.id"
         ></Post>
+        </div>
         <hr />
         <div class="row">
           <div class="col-3 actions">
@@ -206,6 +208,9 @@ export default {
         this.post.likes_count--;
         this.post.liked_by_user = false;
       }
+    },
+    goUser(){
+      this.$router.push(`/${this.post.user_id}/user/profile/posts`)
     }
   }
 };
@@ -282,5 +287,11 @@ textarea {
 .liked{
   transition: 0.7s;
   color:rgba(233, 40, 40, 0.74);
+}
+.user_link{
+  transition:.4s
+}
+.user_link:hover{
+ background: rgba(100, 148, 237, 0.15);
 }
 </style>

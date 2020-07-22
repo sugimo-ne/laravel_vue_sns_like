@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use App\User;
 
@@ -40,4 +41,12 @@ Route::delete('/posts/{id}/like' , 'PostController@unlike');
 Route::get('/user/{id}' , 'UserController@show')->name('user.show');
 Route::get('/user/likes/{id}' , 'UserController@likes')->name('user.likes');
 Route::get('/{user_id}' , 'UserController@info');
+
+//フォロー系
+Route::put('/user/{id}/follow' , 'UserController@follow')->name('user.follow');//->middleware('auth');
+Route::delete('/user/{id}/unfollow' , 'UserController@unfollow')->name('user.unfollow');//->middleware('auth');
+Route::get('/user/{id}/follows' , 'UserController@followList')->name('user.followList');
+
+//Route::get('/test/follow' , 'UserController@fuck')->name('user.fuck');
+
 
