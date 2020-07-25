@@ -62,8 +62,6 @@
       </div>
       <div class="profile_detail">
         <div v-if="user.intro == null">
-          <!-- <p v-if="currentUser.id == user.id" class="p-2">プロフィール編集で自己紹介文を入力できます</p> -->
-          <!-- <p v-else class="p-2">よろしくお願いします</p> -->
           <p>よろしくお願いします</p>
         </div>
         <p v-else class="p-2">{{user.intro}}</p>
@@ -96,15 +94,6 @@
               :post_id="comment.post_id"
               :commenter="user.name"
             ></router-view>
-
-            <!-- <router-view
-              v-else
-              :id="comment.id"
-              :content="comment.content"
-              :created_at="comment.created_at"
-              :post_id="comment.post_id"
-              :commenter="user.name"
-            ></router-view>-->
           </li>
         </ul>
       </div>
@@ -135,20 +124,17 @@ export default {
       return this.user.followings.length;
     },
     postsReverse() {
-       if(this.posts){
+      if (this.posts) {
         return this.posts.slice().reverse();
       }
-      return false
+      return false;
     },
     commentsReverse() {
-      if(this.comments){
+      if (this.comments) {
         return this.comments.slice().reverse();
       }
-      return false
+      return false;
     }
-    // follower(){
-    //   return this.user.followers.length;
-    // },
   },
   components: {
     Posts,
@@ -184,7 +170,7 @@ export default {
   },
   created() {
     this.fetchData();
-    if(this.isLogin){
+    if (this.isLogin) {
       this.editInfo.image = this.currentUser.image;
     }
   },
@@ -196,7 +182,6 @@ export default {
         this.user = res.user;
         this.posts = res.posts;
         this.comments = res.Comments;
-        console.log(this.posts);
         this.loading = false;
 
         let name = this.$route.name;
@@ -239,7 +224,6 @@ export default {
       const response = await axios
         .put(`/api/user/${this.id}/follow`)
         .then(response => {
-          console.log(response);
           this.isfollowing = true;
           this.follower++;
         });
@@ -248,7 +232,6 @@ export default {
       const response = await axios
         .delete(`/api/user/${this.id}/unfollow`)
         .then(response => {
-          console.log(response);
           this.isfollowing = false;
           this.follower--;
         });
@@ -258,13 +241,11 @@ export default {
     },
 
     onFileSelected(event) {
-      //console.log(event.target.files[0].type)
       if (event.target.files.length === 0) {
         this.reset();
         return false;
       }
       if (!event.target.files[0].type.match("image.*")) {
-        console.log("false");
         this.reset();
         return false;
       }
@@ -284,7 +265,6 @@ export default {
       const formData = new FormData();
       formData.append("photo", this.fileName);
       await axios.post("/api/photos", formData).then(response => {
-        console.log(response);
         this.editInfo.image = response.data.photo_name;
         this.$store.dispatch("auth/editUser", this.editInfo);
       });
@@ -347,7 +327,6 @@ ul {
   background-color: white;
   height: 400px;
   overflow: scroll;
-  /* padding:30px 45px; */
 }
 .fade-enter-active,
 .fade-leave-active {

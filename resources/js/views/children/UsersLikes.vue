@@ -42,10 +42,7 @@ export default {
   computed: {
     isLogin() {
       return this.$store.getters["auth/check"];
-    },
-    // likesReverse() {
-    //   return this.likes.slice().reverse();
-    // }
+    }
   },
   components: {
     Post
@@ -54,8 +51,7 @@ export default {
   data() {
     return {
       loading: false,
-      likes: null,
-      //likesArr: []
+      likes: null
     };
   },
   methods: {
@@ -66,25 +62,7 @@ export default {
   created() {
     this.loading = true;
     axios.get(`/api/user/likes/${this.aboutUser}`).then(response => {
-      console.log(response.data.posts)
       this.likes = response.data.posts;
-      // let likes = [];
-      // let length = Object.values(this.likes).length;
-      // for (let i = 0; i < length; i++) {
-      //   let like = this.likes[i];
-      //   likes.push(like);
-      //   // this.likesArr.push(like)
-      //   console.log(likes);
-      // }
-      // let likesArr = [];
-      // likes.forEach((item, index) => {
-      //   axios.get(`/api/${item.user_id}`).then(response => {
-      //     likes[index].user = response.data.name;
-      //     likesArr.push(likes[index]);
-      //   });
-      // });
-      // console.log(likesArr);
-      // this.likesArr = likesArr;
       this.loading = false;
     });
   }

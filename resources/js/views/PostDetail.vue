@@ -22,16 +22,16 @@
     <div v-else>
       <div class="container">
         <div class="user_link">
-        <Post
-          :commentCount="commentCount"
-          :id="post.id"
-          :content="post.content"
-          :created_at="post.created_at"
-          :name="post.user.name"
-          :user_id="post.user.id"
-          :profile="post.user.image"
-          :filename="post.filename"
-        ></Post>
+          <Post
+            :commentCount="commentCount"
+            :id="post.id"
+            :content="post.content"
+            :created_at="post.created_at"
+            :name="post.user.name"
+            :user_id="post.user.id"
+            :profile="post.user.image"
+            :filename="post.filename"
+          ></Post>
         </div>
         <hr />
         <div class="row">
@@ -118,8 +118,8 @@ import Post from "../components/posts/Post";
 import Comment from "../components/posts/Comment";
 export default {
   computed: {
-    imageUrl(){
-      return this.$store.getters["auth/imageUrl"]
+    imageUrl() {
+      return this.$store.getters["auth/imageUrl"];
     },
     isLogin() {
       return this.$store.getters["auth/check"];
@@ -133,9 +133,6 @@ export default {
     commentCount() {
       return this.commentLists.length;
     }
-    // likeCount(){
-    //     return this.post.likes.length
-    // }
   },
   components: {
     Post,
@@ -161,7 +158,6 @@ export default {
       this.loading = true;
       axios.get(`/api/posts/${this.postId}`).then(response => {
         this.post = response.data;
-        console.log(this.post);
         this.loading = false;
       });
     },
@@ -176,7 +172,6 @@ export default {
           content: this.comment.content
         })
         .then(response => {
-          console.log(response);
           this.getPostDetail();
           this.showForm = false;
         });
@@ -185,7 +180,6 @@ export default {
     },
     formCall(judge) {
       this.showForm = !judge;
-      console.log(this.showForm);
     },
     likeCheck() {
       if (this.post.liked_by_user) {
@@ -215,8 +209,8 @@ export default {
         this.post.liked_by_user = false;
       }
     },
-    goUser(){
-      this.$router.push(`/${this.post.user_id}/user/profile/posts`)
+    goUser() {
+      this.$router.push(`/${this.post.user_id}/user/profile/posts`);
     }
   }
 };
@@ -236,9 +230,6 @@ export default {
   transition: opacity 0.3s;
 }
 .main {
-  /* height:100vh;
-        overflow: scroll;
-        position:relative; */
 }
 .modal_cover {
   background: rgba(0, 0, 0, 0.5);
@@ -278,27 +269,15 @@ textarea {
   background: white;
 }
 .dummy {
-  /* color:white;
-        font-weight: bold; */
   opacity: 0.5;
 }
-/* .comment_form{
-        position:absolute;
-        bottom:0;
-    } */
+
 .form_active {
   color: brown;
 }
 
-.liked{
+.liked {
   transition: 0.7s;
-  color:rgba(233, 40, 40, 0.74);
+  color: rgba(233, 40, 40, 0.74);
 }
-/* .user_link{
-  transition:.4s
-}
-.user_link:hover{
- background: rgba(100, 148, 237, 0.15);
-} */
-
 </style>

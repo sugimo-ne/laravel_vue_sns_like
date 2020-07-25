@@ -108,7 +108,6 @@ const actions = {
       console.log(response)
       if(response.status === 201){
         context.commit('setApiStatus' , true)
-        //context.commit('setUser', response.data.data)
         window.location.reload()
         return false
       }

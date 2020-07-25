@@ -82,7 +82,7 @@ export default {
           this.like();
         }
       }else{
-        console.log('loginセイ')
+       return false
       }
      
     },

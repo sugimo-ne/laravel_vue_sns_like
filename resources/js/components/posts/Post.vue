@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="row no-gutters p-2">
-      <div class="col-1 text-center p-2 " @click="goUser()">
+      <div class="col-1 text-center p-2" @click="goUser()">
         <img v-if="profile" :src="`${imageUrl}${profile}`" class="user_link" alt />
         <i v-else class="fas fa-user-circle user_link"></i>
         <br />
@@ -29,8 +29,8 @@ export default {
     }
   },
   methods: {
-    goUser(){
-      this.$router.push(`/${this.user_id}/user/profile/posts`)
+    goUser() {
+      this.$router.push(`/${this.user_id}/user/profile/posts`);
     }
   },
   props: {
@@ -65,15 +65,15 @@ img {
   display: block;
   /* height: 300px; */
   width: 85%;
-  height:auto;
+  height: auto;
   border-radius: 8%;
 }
 
-.user_link{
-  transition:.4s;
-    cursor: pointer;
+.user_link {
+  transition: 0.4s;
+  cursor: pointer;
 }
-.user_link:hover{
- background: rgba(42, 85, 150, 0.35);
+.user_link:hover {
+  background: rgba(42, 85, 150, 0.35);
 }
 </style>

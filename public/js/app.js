@@ -2040,6 +2040,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   computed: {
@@ -2116,10 +2117,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['isLogin', 'user'],
+  props: ["isLogin", "user"],
   computed: {
+    currentUser: function currentUser() {
+      return this.$store.getters["auth/user"];
+    },
     title: function title() {
       return this.$route.name;
     }
@@ -2154,16 +2160,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   computed: {
     isLogin: function isLogin() {
-      return this.$store.getters['auth/check'];
+      return this.$store.getters["auth/check"];
     },
     user: function user() {
-      return this.$store.getters['auth/user'];
+      return this.$store.getters["auth/user"];
     }
   },
   components: {
@@ -2271,7 +2276,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context.next = 2;
                 return axios.put("/api/user/".concat(_this.id, "/follow")).then(function (response) {
-                  console.log(response);
                   _this.stateMessage = true;
                   _this.showMessage = "フォロー中";
                 });
@@ -2298,7 +2302,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context2.next = 2;
                 return axios["delete"]("/api/user/".concat(_this2.id, "/unfollow")).then(function (response) {
-                  console.log(response);
                   _this2.stateMessage = false;
                   _this2.showMessage = "フォローする";
                 });
@@ -2542,7 +2545,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           this.like();
         }
       } else {
-        console.log('loginセイ');
+        return false;
       }
     },
     like: function like() {
@@ -2665,6 +2668,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2676,14 +2690,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   computed: {
     apiStatus: function apiStatus() {
-      return this.$store.getters['error/error'];
+      return this.$store.getters["error/error"];
     },
     loginErrors: function loginErrors() {
-      return this.$store.getters['auth/loginErrorMessages'];
+      return this.$store.getters["auth/loginErrorMessages"];
     }
   },
   methods: {
-    login: function login() {
+    testlogin: function testlogin() {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
@@ -2691,15 +2705,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
-                return _this.$store.dispatch('auth/login', _this.loginForm);
+                _this.loginForm.email = "test@test";
+                _this.loginForm.password = "12345678";
+                _context.next = 4;
+                return _this.$store.dispatch("auth/login", _this.loginForm);
 
-              case 2:
-                console.log(_this.loginErrors);
-                _this.loginForm.email = '';
-                _this.loginForm.password = '';
+              case 4:
+                _this.loginForm.email = "";
+                _this.loginForm.password = "";
 
-              case 5:
+              case 6:
               case "end":
                 return _context.stop();
             }
@@ -2707,8 +2722,31 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee);
       }))();
     },
+    login: function login() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return _this2.$store.dispatch("auth/login", _this2.loginForm);
+
+              case 2:
+                _this2.loginForm.email = "";
+                _this2.loginForm.password = "";
+
+              case 4:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
     clearError: function clearError() {
-      this.$store.commit('auth/setLoginErrorMessages', null);
+      this.$store.commit("auth/setLoginErrorMessages", null);
     }
   },
   created: function created() {
@@ -2748,6 +2786,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2757,7 +2798,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      currentComponent: 'Register'
+      currentComponent: "Register"
     };
   }
 });
@@ -2825,32 +2866,53 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       registerForm: {
-        name: 'name',
-        email: 'email@email',
-        password: '',
-        password_confirmation: ''
+        name: "",
+        email: "",
+        password: "",
+        password_confirmation: ""
       }
     };
   },
   computed: {
     apiStatus: function apiStatus() {
-      return this.$store.getters['error/error'];
+      return this.$store.getters["error/error"];
     },
     registerError: function registerError() {
-      return this.$store.getters['auth/registerErrorMessages'];
+      return this.$store.getters["auth/registerErrorMessages"];
     },
     checkPassword: function checkPassword() {
       if (this.registerForm.password.length > 0) {
-        return this.registerForm.password.length >= 8 ? 'ok' : 'パスワードが短すぎです';
+        return this.registerForm.password.length >= 8 ? "ok" : "パスワードが短すぎです";
       }
     },
     checkSamePassword: function checkSamePassword() {
       if (this.registerForm.password !== this.registerForm.password_confirmation) {
-        return 'パスワードが一致しません';
+        return "パスワードが一致しません";
       }
     },
     validate: function validate() {
@@ -2869,12 +2931,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return _this.$store.dispatch('auth/register', _this.registerForm).then(function () {});
+                return _this.$store.dispatch("auth/register", _this.registerForm).then(function () {});
 
               case 2:
-                console.log(_this.registerError);
-
-              case 3:
               case "end":
                 return _context.stop();
             }
@@ -2928,11 +2987,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2946,8 +3000,8 @@ __webpack_require__.r(__webpack_exports__);
       loading: false,
       followings: null,
       followers: null,
-      following: 'フォロー中',
-      unfollowing: 'フォローする',
+      following: "フォロー中",
+      unfollowing: "フォローする",
       user: null
     };
   },
@@ -2968,7 +3022,6 @@ __webpack_require__.r(__webpack_exports__);
 
       this.loading = true;
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/user/".concat(this.id, "/follows")).then(function (response) {
-        console.log(response.data);
         _this.followings = response.data.about_user.followings;
         _this.followers = response.data.about_user.followers;
         _this.user = response.data.about_user;
@@ -3112,11 +3165,7 @@ __webpack_require__.r(__webpack_exports__);
       var formData = new FormData();
       formData.append('photo', this.fileName);
       axios.post("/api/photos", formData).then(function (response) {
-        console.log(response);
-        _this.postData.filename = response.data.photo_name;
-        console.log(_this.postData);
-        _this.postData.user_id = _this.$store.getters["auth/user"].id, axios.post("/api/posts", _this.postData).then(function (response) {
-          console.log(response);
+        _this.postData.filename = response.data.photo_name(_this.postData.user_id = _this.$store.getters["auth/user"].id), axios.post("/api/posts", _this.postData).then(function (response) {
           var post = response.data;
           post.user = {
             name: null,
@@ -3136,31 +3185,24 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       axios.get("/api/posts/?page=".concat(this.page)).then(function (response) {
-        // this.posts = response.data.data;
         response.data.data.forEach(function (item) {
           _this2.posts.push(item);
         });
-        console.log(_this2.posts);
-      })["catch"](function (e) {
-        console.log("error");
-      });
+      })["catch"](function (e) {});
     },
     addShow: function addShow() {
-      console.log('ooooi');
       this.page++;
       this.getPosts();
     },
     onFileSelected: function onFileSelected(event) {
       var _this3 = this;
 
-      //console.log(event.target.files[0].type)
       if (event.target.files.length === 0) {
         this.reset();
         return false;
       }
 
       if (!event.target.files[0].type.match("image.*")) {
-        console.log("false");
         this.reset();
         return false;
       }
@@ -3337,10 +3379,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     commentCount: function commentCount() {
       return this.commentLists.length;
-    } // likeCount(){
-    //     return this.post.likes.length
-    // }
-
+    }
   },
   components: {
     Post: _components_posts_Post__WEBPACK_IMPORTED_MODULE_2__["default"],
@@ -3368,7 +3407,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.loading = true;
       axios.get("/api/posts/".concat(this.postId)).then(function (response) {
         _this.post = response.data;
-        console.log(_this.post);
         _this.loading = false;
       });
     },
@@ -3385,8 +3423,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       axios.post("/api/posts/".concat(this.postId, "/comments"), {
         content: this.comment.content
       }).then(function (response) {
-        console.log(response);
-
         _this3.getPostDetail();
 
         _this3.showForm = false;
@@ -3395,7 +3431,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     formCall: function formCall(judge) {
       this.showForm = !judge;
-      console.log(this.showForm);
     },
     likeCheck: function likeCheck() {
       if (this.post.liked_by_user) {
@@ -3610,17 +3645,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3651,10 +3675,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
 
       return false;
-    } // follower(){
-    //   return this.user.followers.length;
-    // },
-
+    }
   },
   components: {
     Posts: _components_posts_Posts__WEBPACK_IMPORTED_MODULE_1__["default"],
@@ -3705,7 +3726,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         _this.user = res.user;
         _this.posts = res.posts;
         _this.comments = res.Comments;
-        console.log(_this.posts);
         _this.loading = false;
         var name = _this.$route.name;
 
@@ -3755,7 +3775,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context.next = 2;
                 return axios.put("/api/user/".concat(_this2.id, "/follow")).then(function (response) {
-                  console.log(response);
                   _this2.isfollowing = true;
                   _this2.follower++;
                 });
@@ -3782,7 +3801,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context2.next = 2;
                 return axios["delete"]("/api/user/".concat(_this3.id, "/unfollow")).then(function (response) {
-                  console.log(response);
                   _this3.isfollowing = false;
                   _this3.follower--;
                 });
@@ -3804,14 +3822,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     onFileSelected: function onFileSelected(event) {
       var _this4 = this;
 
-      //console.log(event.target.files[0].type)
       if (event.target.files.length === 0) {
         this.reset();
         return false;
       }
 
       if (!event.target.files[0].type.match("image.*")) {
-        console.log("false");
         this.reset();
         return false;
       }
@@ -3843,7 +3859,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 formData.append("photo", _this5.fileName);
                 _context3.next = 4;
                 return axios.post("/api/photos", formData).then(function (response) {
-                  console.log(response);
                   _this5.editInfo.image = response.data.photo_name;
 
                   _this5.$store.dispatch("auth/editUser", _this5.editInfo);
@@ -3959,10 +3974,7 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     isLogin: function isLogin() {
       return this.$store.getters["auth/check"];
-    } // likesReverse() {
-    //   return this.likes.slice().reverse();
-    // }
-
+    }
   },
   components: {
     Post: _components_posts_Post__WEBPACK_IMPORTED_MODULE_0__["default"]
@@ -3971,8 +3983,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       loading: false,
-      likes: null //likesArr: []
-
+      likes: null
     };
   },
   methods: {
@@ -3985,25 +3996,7 @@ __webpack_require__.r(__webpack_exports__);
 
     this.loading = true;
     axios.get("/api/user/likes/".concat(this.aboutUser)).then(function (response) {
-      console.log(response.data.posts);
-      _this.likes = response.data.posts; // let likes = [];
-      // let length = Object.values(this.likes).length;
-      // for (let i = 0; i < length; i++) {
-      //   let like = this.likes[i];
-      //   likes.push(like);
-      //   // this.likesArr.push(like)
-      //   console.log(likes);
-      // }
-      // let likesArr = [];
-      // likes.forEach((item, index) => {
-      //   axios.get(`/api/${item.user_id}`).then(response => {
-      //     likes[index].user = response.data.name;
-      //     likesArr.push(likes[index]);
-      //   });
-      // });
-      // console.log(likesArr);
-      // this.likesArr = likesArr;
-
+      _this.likes = response.data.posts;
       _this.loading = false;
     });
   }
@@ -4031,7 +4024,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["posts", 'isLogin'],
+  props: ["posts", "isLogin"],
   components: {
     Posts: _components_posts_Posts__WEBPACK_IMPORTED_MODULE_0__["default"]
   }
@@ -4089,7 +4082,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\ni[data-v-5dd24bca]{\n    font-size: 2rem;\n}\n.nav[data-v-5dd24bca]{\n    z-index:10;\n    background: white;\n    height:55px;\n    position: fixed;\n    overflow: hidden;\n}\n.back[data-v-5dd24bca]{\n    border-radius: 50px;\n    padding:12px 20px;\n    font-size:2rem;\n    float: left;\n    transition:0.4s;\n}\n.back[data-v-5dd24bca]:hover{\n    background: rgba(128, 128, 128, 0.493);\n}\nimg[data-v-5dd24bca]{\n    display: inline;\n    height:40px;\n    width:40px;\n    border-radius: 50%;\n}\nh1[data-v-5dd24bca]{\n    padding:15px;\n    font-size:1rem;\n}\n\n", ""]);
+exports.push([module.i, "\ni[data-v-5dd24bca] {\n  font-size: 2rem;\n}\n.nav[data-v-5dd24bca] {\n  z-index: 10;\n  background: white;\n  height: 55px;\n  position: fixed;\n  overflow: hidden;\n}\n.back[data-v-5dd24bca] {\n  border-radius: 50px;\n  padding: 12px 20px;\n  font-size: 2rem;\n  float: left;\n  transition: 0.4s;\n}\n.back[data-v-5dd24bca]:hover {\n  background: rgba(128, 128, 128, 0.493);\n}\nimg[data-v-5dd24bca] {\n  display: inline;\n  height: 40px;\n  width: 40px;\n  border-radius: 50%;\n}\nh1[data-v-5dd24bca] {\n  padding: 15px;\n  font-size: 1rem;\n}\n", ""]);
 
 // exports
 
@@ -4108,7 +4101,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.right_bar[data-v-7fc9ce42]{\n    width:25%;\n    background:white;\n    height:100vh;\n    overflow-y: scroll;\n    position:fixed;\n}\n", ""]);
+exports.push([module.i, "\n.right_bar[data-v-7fc9ce42] {\n  width: 25%;\n  background: white;\n  height: 100vh;\n  overflow-y: scroll;\n  position: fixed;\n}\n", ""]);
 
 // exports
 
@@ -4146,7 +4139,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\ni[data-v-43cade48] {\n  font-size: 3rem;\n}\n.owner[data-v-43cade48] {\n  font-size: 0.8rem;\n  font-weight: bold;\n}\n.delete[data-v-43cade48] {\n  font-size: 1rem;\n}\nimg[data-v-43cade48]{\n        display: inline;\n        height:50px;\n        width:50px;\n        border-radius: 50%;\n}\n", ""]);
+exports.push([module.i, "\ni[data-v-43cade48] {\n  font-size: 3rem;\n}\n.owner[data-v-43cade48] {\n  font-size: 0.8rem;\n  font-weight: bold;\n}\n.delete[data-v-43cade48] {\n  font-size: 1rem;\n}\nimg[data-v-43cade48] {\n  display: inline;\n  height: 50px;\n  width: 50px;\n  border-radius: 50%;\n}\n", ""]);
 
 // exports
 
@@ -4165,7 +4158,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\ni[data-v-16291007] {\n  font-size: 3rem;\n}\n.owner[data-v-16291007] {\n  font-size: 0.8rem;\n  font-weight: bold;\n}\nimg[data-v-16291007] {\n  display: inline;\n  height: 50px;\n  width: 50px;\n  border-radius: 50%;\n}\n.post_show_image[data-v-16291007] {\n  display: block;\n  /* height: 300px; */\n  width: 85%;\n  height:auto;\n  border-radius: 8%;\n}\n.user_link[data-v-16291007]{\n  transition:.4s;\n    cursor: pointer;\n}\n.user_link[data-v-16291007]:hover{\n background: rgba(42, 85, 150, 0.35);\n}\n", ""]);
+exports.push([module.i, "\ni[data-v-16291007] {\n  font-size: 3rem;\n}\n.owner[data-v-16291007] {\n  font-size: 0.8rem;\n  font-weight: bold;\n}\nimg[data-v-16291007] {\n  display: inline;\n  height: 50px;\n  width: 50px;\n  border-radius: 50%;\n}\n.post_show_image[data-v-16291007] {\n  display: block;\n  /* height: 300px; */\n  width: 85%;\n  height: auto;\n  border-radius: 8%;\n}\n.user_link[data-v-16291007] {\n  transition: 0.4s;\n  cursor: pointer;\n}\n.user_link[data-v-16291007]:hover {\n  background: rgba(42, 85, 150, 0.35);\n}\n", ""]);
 
 // exports
 
@@ -4203,7 +4196,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\nform[data-v-46ad099b]{\n    border-radius:20px;\n}\n.error[data-v-46ad099b]{\n    border-radius: 20px;\n    box-shadow: 0px 0px 4px rgba(0 , 0 , 0 , .8);\n    background: rgba(238, 103, 103, 0.699);\n}\n.error p[data-v-46ad099b]{\n    color: red;\n    font-weight: 600;\n}\n", ""]);
+exports.push([module.i, "\nform[data-v-46ad099b] {\n  border-radius: 20px;\n}\n.error[data-v-46ad099b] {\n  border-radius: 20px;\n  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.8);\n  background: rgba(238, 103, 103, 0.699);\n}\n.error p[data-v-46ad099b] {\n  color: red;\n  font-weight: 600;\n}\n", ""]);
 
 // exports
 
@@ -4222,7 +4215,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\nform[data-v-60e1e561]{\n    border-radius:20px;\n}\n.error[data-v-60e1e561]{\n    border-radius: 20px;\n    box-shadow: 0px 0px 4px rgba(0 , 0 , 0 , .8);\n    background: rgba(238, 103, 103, 0.699);\n}\n.error p[data-v-60e1e561]{\n    color: red;\n    font-weight: 600;\n}\n.error_message[data-v-60e1e561]{\n    color:red;\n    font-size: 0.5rem;\n}\n/* .dummy{\n    border:1px solid black;\n    background:white;\n    color:black;\n    font-weight: 500;\n    padding:20px 40px;\n    cursor: pointer;\n    transition: .4s;\n}\n.dummy:hover{\n    background: rgba(209, 87, 87, 0.87);\n    color:white;\n} */\n.dummy[data-v-60e1e561]{\n    opacity: 0.5;\n}\n", ""]);
+exports.push([module.i, "\nform[data-v-60e1e561] {\n  border-radius: 20px;\n}\n.error[data-v-60e1e561] {\n  border-radius: 20px;\n  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.8);\n  background: rgba(238, 103, 103, 0.699);\n}\n.error p[data-v-60e1e561] {\n  color: red;\n  font-weight: 600;\n}\n.error_message[data-v-60e1e561] {\n  color: red;\n  font-size: 0.5rem;\n}\n.dummy[data-v-60e1e561] {\n  opacity: 0.5;\n}\n", ""]);
 
 // exports
 
@@ -4260,7 +4253,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\nul[data-v-63cd6604] {\n  padding: 0;\n  list-style-type: none;\n}\n.icon[data-v-63cd6604] {\n  font-size: 3rem;\n}\ntextarea[data-v-63cd6604] {\n  border: none;\n  resize: none;\n}\n.back[data-v-63cd6604] {\n  background: rgb(240, 240, 240);\n}\n.post_area[data-v-63cd6604],\n.post_form[data-v-63cd6604] {\n  background: white;\n}\n.dummy[data-v-63cd6604] {\n  /* color:white;\n        font-weight: bold; */\n  opacity: 0.5;\n}\n.add_show[data-v-63cd6604] {\n  transition: 0.4s;\n  cursor: pointer;\n}\n.add_show[data-v-63cd6604]:hover {\n  background: rgba(100, 237, 214, 0.719);\n}\nimg[data-v-63cd6604] {\n  height: 50px;\n  width: 50px;\n  border-radius: 50%;\n}\n.post_img[data-v-63cd6604] {\n  display: block;\n  height: 200px;\n  width: 200px;\n  border-radius: 0%;\n}\n", ""]);
+exports.push([module.i, "\nul[data-v-63cd6604] {\n  padding: 0;\n  list-style-type: none;\n}\n.icon[data-v-63cd6604] {\n  font-size: 3rem;\n}\ntextarea[data-v-63cd6604] {\n  border: none;\n  resize: none;\n}\n.back[data-v-63cd6604] {\n  background: rgb(240, 240, 240);\n}\n.post_area[data-v-63cd6604],\n.post_form[data-v-63cd6604] {\n  background: white;\n}\n.dummy[data-v-63cd6604] {\n  opacity: 0.5;\n}\n.add_show[data-v-63cd6604] {\n  transition: 0.4s;\n  cursor: pointer;\n}\n.add_show[data-v-63cd6604]:hover {\n  background: rgba(100, 237, 214, 0.719);\n}\nimg[data-v-63cd6604] {\n  height: 50px;\n  width: 50px;\n  border-radius: 50%;\n}\n.post_img[data-v-63cd6604] {\n  display: block;\n  height: 200px;\n  width: 200px;\n  border-radius: 0%;\n}\n", ""]);
 
 // exports
 
@@ -4279,7 +4272,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.fade-enter[data-v-f1451a20],\n.fade-leave-to[data-v-f1451a20] {\n  opacity: 0;\n}\n.fade-enter-to[data-v-f1451a20],\n.fade-leave[data-v-f1451a20] {\n  opacity: 1;\n}\n.fade-enter-active[data-v-f1451a20],\n.fade-leave-active[data-v-f1451a20] {\n  transition: opacity 0.3s;\n}\n.main[data-v-f1451a20] {\n  /* height:100vh;\n        overflow: scroll;\n        position:relative; */\n}\n.modal_cover[data-v-f1451a20] {\n  background: rgba(0, 0, 0, 0.5);\n  height: 100vh;\n  position: absolute;\n  width: 100%;\n  z-index: 14;\n}\n.modal_content[data-v-f1451a20] {\n  z-index: 15;\n  position: absolute;\n  top: 50%;\n  transform: translate(-50%, -50%);\n  left: 50%;\n  background: white;\n  padding: 40px;\n  width: 60%;\n}\n.info[data-v-f1451a20] {\n  font-size: 0.7rem;\n  font-weight: bold;\n}\n.actions[data-v-f1451a20] {\n  text-align: center;\n}\n.icon[data-v-f1451a20] {\n  font-size: 3rem;\n}\ntextarea[data-v-f1451a20] {\n  border: none;\n  resize: none;\n}\n.post_area[data-v-f1451a20],\n.post_form[data-v-f1451a20] {\n  background: white;\n}\n.dummy[data-v-f1451a20] {\n  /* color:white;\n        font-weight: bold; */\n  opacity: 0.5;\n}\n/* .comment_form{\n        position:absolute;\n        bottom:0;\n    } */\n.form_active[data-v-f1451a20] {\n  color: brown;\n}\n.liked[data-v-f1451a20]{\n  transition: 0.7s;\n  color:rgba(233, 40, 40, 0.74);\n}\n/* .user_link{\n  transition:.4s\n}\n.user_link:hover{\n background: rgba(100, 148, 237, 0.15);\n} */\n\n", ""]);
+exports.push([module.i, "\n.fade-enter[data-v-f1451a20],\n.fade-leave-to[data-v-f1451a20] {\n  opacity: 0;\n}\n.fade-enter-to[data-v-f1451a20],\n.fade-leave[data-v-f1451a20] {\n  opacity: 1;\n}\n.fade-enter-active[data-v-f1451a20],\n.fade-leave-active[data-v-f1451a20] {\n  transition: opacity 0.3s;\n}\n.main[data-v-f1451a20] {\n}\n.modal_cover[data-v-f1451a20] {\n  background: rgba(0, 0, 0, 0.5);\n  height: 100vh;\n  position: absolute;\n  width: 100%;\n  z-index: 14;\n}\n.modal_content[data-v-f1451a20] {\n  z-index: 15;\n  position: absolute;\n  top: 50%;\n  transform: translate(-50%, -50%);\n  left: 50%;\n  background: white;\n  padding: 40px;\n  width: 60%;\n}\n.info[data-v-f1451a20] {\n  font-size: 0.7rem;\n  font-weight: bold;\n}\n.actions[data-v-f1451a20] {\n  text-align: center;\n}\n.icon[data-v-f1451a20] {\n  font-size: 3rem;\n}\ntextarea[data-v-f1451a20] {\n  border: none;\n  resize: none;\n}\n.post_area[data-v-f1451a20],\n.post_form[data-v-f1451a20] {\n  background: white;\n}\n.dummy[data-v-f1451a20] {\n  opacity: 0.5;\n}\n.form_active[data-v-f1451a20] {\n  color: brown;\n}\n.liked[data-v-f1451a20] {\n  transition: 0.7s;\n  color: rgba(233, 40, 40, 0.74);\n}\n", ""]);
 
 // exports
 
@@ -4298,7 +4291,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.fixed[data-v-25b9215a] {\n  position: fixed;\n  width: 50%;\n}\n.profile[data-v-25b9215a] {\n  font-size: 4.5rem;\n}\nh1[data-v-25b9215a] {\n  font-size: 1.5rem;\n}\nul[data-v-25b9215a] {\n  padding: 0;\n  list-style-type: none;\n}\n.tab[data-v-25b9215a] {\n  padding: 10px 0;\n}\n.tab[data-v-25b9215a]:hover {\n  transition: 0.4s;\n  background: rgba(100, 148, 237, 0.322);\n}\n.active_tab[data-v-25b9215a] {\n  background: rgba(100, 148, 237, 0.322);\n}\n.follows[data-v-25b9215a] {\n  transition: 0.4s;\n  cursor: pointer;\n}\n.follows[data-v-25b9215a]:hover {\n  background: rgba(100, 148, 237, 0.322);\n}\n.my_modal_back[data-v-25b9215a] {\n  position: absolute;\n  z-index: 100;\n  background-color: rgba(0, 0, 0, 0.356);\n  width: 100%;\n  height: 100vh;\n}\n.my_modal_content[data-v-25b9215a] {\n  width: 85%;\n  left: 7.5%;\n  margin: 30px auto;\n  z-index: 150;\n  position: absolute;\n  background-color: white;\n  height: 400px;\n  overflow: scroll;\n  /* padding:30px 45px; */\n}\n.fade-enter-active[data-v-25b9215a],\n.fade-leave-active[data-v-25b9215a] {\n  transition: opacity 0.5s;\n}\n.fade-enter[data-v-25b9215a],\n.fade-leave-to[data-v-25b9215a] {\n  opacity: 0;\n}\nimg[data-v-25b9215a] {\n  height: 100px;\n  width: 100px;\n  border-radius: 50%;\n}\n", ""]);
+exports.push([module.i, "\n.fixed[data-v-25b9215a] {\n  position: fixed;\n  width: 50%;\n}\n.profile[data-v-25b9215a] {\n  font-size: 4.5rem;\n}\nh1[data-v-25b9215a] {\n  font-size: 1.5rem;\n}\nul[data-v-25b9215a] {\n  padding: 0;\n  list-style-type: none;\n}\n.tab[data-v-25b9215a] {\n  padding: 10px 0;\n}\n.tab[data-v-25b9215a]:hover {\n  transition: 0.4s;\n  background: rgba(100, 148, 237, 0.322);\n}\n.active_tab[data-v-25b9215a] {\n  background: rgba(100, 148, 237, 0.322);\n}\n.follows[data-v-25b9215a] {\n  transition: 0.4s;\n  cursor: pointer;\n}\n.follows[data-v-25b9215a]:hover {\n  background: rgba(100, 148, 237, 0.322);\n}\n.my_modal_back[data-v-25b9215a] {\n  position: absolute;\n  z-index: 100;\n  background-color: rgba(0, 0, 0, 0.356);\n  width: 100%;\n  height: 100vh;\n}\n.my_modal_content[data-v-25b9215a] {\n  width: 85%;\n  left: 7.5%;\n  margin: 30px auto;\n  z-index: 150;\n  position: absolute;\n  background-color: white;\n  height: 400px;\n  overflow: scroll;\n}\n.fade-enter-active[data-v-25b9215a],\n.fade-leave-active[data-v-25b9215a] {\n  transition: opacity 0.5s;\n}\n.fade-enter[data-v-25b9215a],\n.fade-leave-to[data-v-25b9215a] {\n  opacity: 0;\n}\nimg[data-v-25b9215a] {\n  height: 100px;\n  width: 100px;\n  border-radius: 50%;\n}\n", ""]);
 
 // exports
 
@@ -23859,22 +23852,30 @@ var render = function() {
   return _c("div", { staticClass: "left_bar border-right" }, [
     _c("h1", [_vm._v("laravel vue bbs")]),
     _vm._v(" "),
-    _c("ul", [
-      _c(
-        "li",
-        {
-          class: { action: this.$route.name == "Home" },
-          on: { click: _vm.toHome }
-        },
-        [_c("i", { staticClass: "fas fa-home" }), _vm._v(" ホーム\n    ")]
-      ),
-      _vm._v(" "),
-      _c("li", [_vm._v("\n        ログインで様々な機能が楽しめます\n    ")])
-    ]),
-    _vm._v(" "),
-    _vm.isLogin
-      ? _c("div", [
+    !_vm.isLogin
+      ? _c("ul", [
+          _c(
+            "li",
+            {
+              class: { action: this.$route.name == "Home" },
+              on: { click: _vm.toHome }
+            },
+            [_c("i", { staticClass: "fas fa-home" }), _vm._v(" ホーム\n    ")]
+          ),
+          _vm._v(" "),
+          _c("li", [_vm._v("ログインで様々な機能が楽しめます")])
+        ])
+      : _c("div", [
           _c("ul", [
+            _c(
+              "li",
+              {
+                class: { action: this.$route.name == "Home" },
+                on: { click: _vm.toHome }
+              },
+              [_c("i", { staticClass: "fas fa-home" }), _vm._v(" ホーム\n    ")]
+            ),
+            _vm._v(" "),
             _c(
               "li",
               {
@@ -23914,7 +23915,6 @@ var render = function() {
             ])
           ])
         ])
-      : _vm._e()
   ])
 }
 var staticRenderFns = []
@@ -23956,7 +23956,7 @@ var render = function() {
         this.$route.name == "follows"
           ? _c("span", [_vm._v(_vm._s(_vm.$route.params.name) + "/")])
           : _vm._e(),
-        _vm._v(_vm._s(_vm.title))
+        _vm._v("\n      " + _vm._s(_vm.title) + "\n    ")
       ])
     ]),
     _vm._v(" "),
@@ -23967,23 +23967,16 @@ var render = function() {
         !_vm.isLogin
           ? _c("div", { staticClass: "p-3" }, [
               _c("i", { staticClass: "fas fa-user-circle" }),
-              _vm._v("\n        guest\n        ")
+              _vm._v("\n      guest\n    ")
             ])
           : _c("div", { staticClass: "p-2" }, [
-              _vm.isLogin
+              _vm.currentUser.imageName
                 ? _c("img", {
                     staticClass: "img-fluid",
                     attrs: { src: "" + _vm.user.image, alt: "" }
                   })
-                : _c("i", { staticClass: "fas fa-user-circle" }, [
-                    _vm.isLogin
-                      ? _c("img", {
-                          staticClass: "img-fluid",
-                          attrs: { src: _vm.user.image, alt: "不具合" }
-                        })
-                      : _vm._e()
-                  ]),
-              _vm._v("\n            " + _vm._s(_vm.user.name) + "\n        ")
+                : _c("i", { staticClass: "fas fa-user-circle" }),
+              _vm._v("\n      " + _vm._s(_vm.user.name) + "\n    ")
             ])
       ]
     )
@@ -24234,7 +24227,7 @@ var render = function() {
       _c(
         "div",
         {
-          staticClass: "col-1 text-center p-2 ",
+          staticClass: "col-1 text-center p-2",
           on: {
             click: function($event) {
               return _vm.goUser()
@@ -24445,10 +24438,22 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("button", { staticClass: "btn btn-info form-control" }, [
-          _vm._v("登録")
-        ])
+          _vm._v("ログイン")
+        ]),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("br")
       ]
-    )
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "text-center" }, [
+      _c(
+        "button",
+        { staticClass: "btn btn-primary", on: { click: _vm.testlogin } },
+        [_vm._v("テストユーザーでログイン")]
+      )
+    ])
   ])
 }
 var staticRenderFns = [
@@ -24457,11 +24462,9 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("p", { staticClass: "text-center" }, [
-      _vm._v("\n               メールアドレス"),
+      _vm._v("\n        メールアドレス\n        "),
       _c("br"),
-      _vm._v(
-        "\n               パスワードのいずれかが\n               違います\n           "
-      )
+      _vm._v("パスワードのいずれかが\n        違います\n      ")
     ])
   }
 ]
@@ -24628,8 +24631,9 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "form-group" }, [
           _c("label", { attrs: { for: "password" } }, [
-            _vm._v("パスワード"),
+            _vm._v("\n        パスワード\n        "),
             _c("br"),
+            _vm._v(" "),
             _c("span", { staticClass: "error_message" }, [
               _vm._v(_vm._s(_vm.checkPassword))
             ])
@@ -24660,8 +24664,9 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "form-group" }, [
           _c("label", { attrs: { for: "password_confirmation" } }, [
-            _vm._v("確認用パスワード"),
+            _vm._v("\n        確認用パスワード\n        "),
             _c("br"),
+            _vm._v(" "),
             _c("span", { staticClass: "error_message" }, [
               _vm._v(_vm._s(_vm.checkSamePassword))
             ])
@@ -24697,12 +24702,12 @@ var render = function() {
         _vm.validate
           ? _c("div", [
               _c("button", { staticClass: "btn btn-info form-control" }, [
-                _vm._v("\n                    登録する\n                ")
+                _vm._v("登録する")
               ])
             ])
           : _c("div", { staticClass: "text-center p-3 dummy" }, [
               _c("span", { staticClass: "btn btn-info form-control" }, [
-                _vm._v("\n                    登録する\n                ")
+                _vm._v("登録する")
               ])
             ])
       ]
@@ -24715,10 +24720,10 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("p", { staticClass: "text-center" }, [
-      _vm._v("\n               既に存在しているメールアドレス、"),
+      _vm._v("\n        既に存在しているメールアドレス、\n        "),
       _c("br"),
       _vm._v(
-        "もしくわ\n               パスワードが8文字以上である必要があります\n           "
+        "もしくわ\n        パスワードが8文字以上である必要があります\n      "
       )
     ])
   }
@@ -24869,7 +24874,7 @@ var render = function() {
           _c("div", { staticClass: "post_form mb-3" }, [
             _c("div", { staticClass: "row border-bottom pl-3 pr-3" }, [
               _c("div", { staticClass: "col-2 p-2" }, [
-                _vm.isLogin
+                _vm.currentUser.imageName
                   ? _c("img", {
                       attrs: { src: "" + _vm.currentUser.image, alt: "" }
                     })
@@ -43674,8 +43679,7 @@ var actions = {
                 break;
               }
 
-              context.commit('setApiStatus', true); //context.commit('setUser', response.data.data)
-
+              context.commit('setApiStatus', true);
               window.location.reload();
               return _context5.abrupt("return", false);
 

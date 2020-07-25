@@ -13,19 +13,14 @@
 
     <div class="mt-3">
       <div v-if="tab == 1">
-          <div v-for="following in followings" :key="following.id + 'following'">
-              <UserCard v-bind="following" 
-        :state="followChecker(following.id)"
-        :isLogin="isLogin"></UserCard>
-          </div>
+        <div v-for="following in followings" :key="following.id + 'following'">
+          <UserCard v-bind="following" :state="followChecker(following.id)" :isLogin="isLogin"></UserCard>
+        </div>
       </div>
 
       <div v-if="tab == 2">
-          <div v-for="follower in followers" :key="follower.id + 'follower'">
-          <UserCard v-bind="follower" 
-         :state="followChecker(follower.id)"
-         :isLogin="isLogin"
-        ></UserCard>
+        <div v-for="follower in followers" :key="follower.id + 'follower'">
+          <UserCard v-bind="follower" :state="followChecker(follower.id)" :isLogin="isLogin"></UserCard>
         </div>
       </div>
     </div>
@@ -46,45 +41,44 @@ export default {
       loading: false,
       followings: null,
       followers: null,
-      following:'フォロー中',
-      unfollowing:'フォローする', 
-      user:null,
+      following: "フォロー中",
+      unfollowing: "フォローする",
+      user: null
     };
   },
   created() {
     this.getFollows();
   },
   computed: {
-   isLogin() {
+    isLogin() {
       return this.$store.getters["auth/check"];
     },
     currentUser() {
       return this.$store.getters["auth/user"];
-    },
+    }
   },
   methods: {
     getFollows() {
       this.loading = true;
       axios.get(`/api/user/${this.id}/follows`).then(response => {
-        console.log(response.data);
         this.followings = response.data.about_user.followings;
         this.followers = response.data.about_user.followers;
 
-        this.user = response.data.about_user
+        this.user = response.data.about_user;
         this.loading = false;
       });
     },
-    followChecker(id){
-        let check = this.user.followings.filter(e => e.id == id)
-        if(check.length > 0){
-            return true
-        }else{
-            return false
-        }
+    followChecker(id) {
+      let check = this.user.followings.filter(e => e.id == id);
+      if (check.length > 0) {
+        return true;
+      } else {
+        return false;
+      }
     },
-    changeTab(num){
-        this.tab = num
-        this.getFollows()
+    changeTab(num) {
+      this.tab = num;
+      this.getFollows();
     }
   }
 };

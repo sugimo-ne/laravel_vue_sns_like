@@ -81,7 +81,6 @@ export default {
       const response = await axios
         .put(`/api/user/${this.id}/follow`)
         .then(response => {
-          console.log(response);
           this.stateMessage = true;
           this.showMessage = "フォロー中";
         });
@@ -90,7 +89,6 @@ export default {
       const response = await axios
         .delete(`/api/user/${this.id}/unfollow`)
         .then(response => {
-          console.log(response);
           this.stateMessage = false;
           this.showMessage = "フォローする";
         });

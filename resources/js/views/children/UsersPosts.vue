@@ -7,11 +7,11 @@
 </template>
 
 <script>
-import Posts from '../../components/posts/Posts'
+import Posts from "../../components/posts/Posts";
 export default {
-  props: ["posts" , 'isLogin'],
-  components:{
-      Posts
+  props: ["posts", "isLogin"],
+  components: {
+    Posts
   }
 };
 </script>

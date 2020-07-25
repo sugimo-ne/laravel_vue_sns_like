@@ -5,7 +5,7 @@
       <div class="post_form mb-3">
         <div class="row border-bottom pl-3 pr-3">
           <div class="col-2 p-2">
-            <img v-if="isLogin" :src="`${currentUser.image}`" alt />
+            <img v-if="currentUser.imageName" :src="`${currentUser.image}`" alt />
             <i v-else class="fas fa-user-circle icon"></i>
           </div>
           <div class="col-10 p-2">
@@ -104,12 +104,12 @@ export default {
       const formData = new FormData()
     formData.append('photo', this.fileName)
        axios.post("/api/photos", formData).then(response => {
-        console.log(response);
+       
         this.postData.filename = response.data.photo_name
-      console.log(this.postData);
+      
       (this.postData.user_id = this.$store.getters["auth/user"].id),
         axios.post("/api/posts", this.postData).then(response => {
-          console.log(response)
+       
           let post = response.data
           post.user = {name:null , profile:null}
           post.user.name = this.currentUser.name
@@ -124,31 +124,27 @@ export default {
       axios
         .get(`/api/posts/?page=${this.page}`)
         .then(response => {
-          // this.posts = response.data.data;
+       
           response.data.data.forEach(item => {
             this.posts.push(item)
           })
             
-          console.log(this.posts);
-          
+      
         })
         .catch(e => {
-          console.log("error");
+    
         });
     },
     addShow(){
-      console.log('ooooi')
       this.page++
       this.getPosts()
     },
    onFileSelected(event) {
-      //console.log(event.target.files[0].type)
       if (event.target.files.length === 0) {
         this.reset()
         return false;
       }
       if (!event.target.files[0].type.match("image.*")) {
-        console.log("false");
         this.reset()
         return false;
       }
@@ -189,8 +185,6 @@ textarea {
   background: white;
 }
 .dummy {
-  /* color:white;
-        font-weight: bold; */
   opacity: 0.5;
 }
 .add_show {

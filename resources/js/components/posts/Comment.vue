@@ -3,9 +3,9 @@
     <div class="select border-top">
       <div class="row no-gutters p-2">
         <div class="col-1 text-center p-2">
-            <div v-if="image">
-                 <img :src="`${imageUrl}${image}`" alt="">
-            </div>
+          <div v-if="image">
+            <img :src="`${imageUrl}${image}`" alt />
+          </div>
           <i v-else class="fas fa-user-circle"></i>
           <br />
         </div>
@@ -71,10 +71,10 @@ i {
 .delete {
   font-size: 1rem;
 }
-img{
-        display: inline;
-        height:50px;
-        width:50px;
-        border-radius: 50%;
-    }
+img {
+  display: inline;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+}
 </style>

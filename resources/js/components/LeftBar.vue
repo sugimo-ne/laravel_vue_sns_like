@@ -1,16 +1,17 @@
 <template>
   <div class="left_bar border-right">
     <h1>laravel vue bbs</h1>
-    <ul>
+    <ul v-if="!isLogin">
       <li @click="toHome" :class="{'action':this.$route.name == 'Home'}">
         <i class="fas fa-home"></i> ホーム
       </li>
-      <li>
-          ログインで様々な機能が楽しめます
-      </li>
+      <li>ログインで様々な機能が楽しめます</li>
     </ul>
-    <div v-if="isLogin">
+    <div v-else>
       <ul>
+        <li @click="toHome" :class="{'action':this.$route.name == 'Home'}">
+        <i class="fas fa-home"></i> ホーム
+      </li>
         <li
           @click="toFollows"
           :class="{'action':this.$route.name == 'follows' && this.$route.params.name == user.name}"
