@@ -79,8 +79,10 @@ export default {
     },
     methods:{
        async register () {
-           await this.$store.dispatch('auth/register', this.registerForm)
-           
+           await this.$store.dispatch('auth/register', this.registerForm).then(()=>{
+               
+           })
+           　
             console.log(this.registerError)
         }
     }

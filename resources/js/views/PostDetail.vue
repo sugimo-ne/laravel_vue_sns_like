@@ -21,7 +21,7 @@
     <div v-if="loading">now loading...</div>
     <div v-else>
       <div class="container">
-        <div class="user_link" @click="goUser()">
+        <div class="user_link">
         <Post
           :commentCount="commentCount"
           :id="post.id"
@@ -29,6 +29,8 @@
           :created_at="post.created_at"
           :name="post.user.name"
           :user_id="post.user.id"
+          :profile="post.user.image"
+          :filename="post.filename"
         ></Post>
         </div>
         <hr />
@@ -103,6 +105,7 @@
           :commenter_id="comment.commenter.id"
           :content="comment.content"
           :created_at="comment.created_at"
+          :image="comment.commenter.image"
         ></Comment>
       </div>
     </div>
@@ -115,6 +118,9 @@ import Post from "../components/posts/Post";
 import Comment from "../components/posts/Comment";
 export default {
   computed: {
+    imageUrl(){
+      return this.$store.getters["auth/imageUrl"]
+    },
     isLogin() {
       return this.$store.getters["auth/check"];
     },
@@ -288,10 +294,11 @@ textarea {
   transition: 0.7s;
   color:rgba(233, 40, 40, 0.74);
 }
-.user_link{
+/* .user_link{
   transition:.4s
 }
 .user_link:hover{
  background: rgba(100, 148, 237, 0.15);
-}
+} */
+
 </style>

@@ -1,7 +1,8 @@
 <template>
   <div class="row no-gutters p-2 user border-bottom">
     <div class="col-1 text-center p-2" @click="goUser()">
-      <i class="fas fa-user-circle"></i>
+      <img v-if="image" :src="`${imageUrl}${image}`" alt="">
+      <i v-else class="fas fa-user-circle"></i>
       <br />
     </div>
     <div class="col-8 pl-2" @click="goUser()">
@@ -13,36 +14,58 @@
       <p class="pl-3 pt-2" v-if="intro">{{intro}}</p>
       <p class="pl-3 pt-2" v-else>よろしくお願いします</p>
     </div>
-    <div class="col-3">
-      <transition name="fade" mode="out-in">
-        <div @mouseleave="mouseLeave" @mouseover="mouseOver">
-          <button v-if="stateMessage" class="btn btn-primary unfollow" @click="unFollow">{{showMessage}}</button>
-        </div>
-      </transition>
-      <button class="btn btn-info" v-if="!stateMessage" @click="follow">{{showMessage}}</button>
-      
+    <div class="col-3" v-if="isLogin">
+      <div v-if="currentUser.id == id"></div>
+      <div v-else>
+        <transition name="fade" mode="out-in">
+          <div @mouseleave="mouseLeave" @mouseover="mouseOver">
+            <button
+              v-if="stateMessage"
+              class="btn btn-primary unfollow"
+              @click="unFollow"
+            >{{showMessage}}</button>
+          </div>
+        </transition>
+        <button class="btn btn-info" v-if="!stateMessage" @click="follow">{{showMessage}}</button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  props: ["id", "image", "intro", "created_at", "name" , 'isfollowing' , 'state'],
+  props: [
+    "id",
+    "image",
+    "intro",
+    "created_at",
+    "name",
+    "isfollowing",
+    "state",
+    "isLogin"
+  ],
+  computed: {
+    imageUrl() {
+      return this.$store.getters["auth/imageUrl"];
+    },
+    currentUser() {
+      return this.$store.getters["auth/user"];
+    }
+  },
   data() {
     return {
-        showMessage:null,
-        stateMessage:null
+      showMessage: null,
+      stateMessage: null
     };
   },
-  created(){
-      if(this.state){
-          this.stateMessage = this.state
-          this.showMessage = 'フォロー中'
-      }else{
-          this.stateMessage = this.state
-          this.showMessage = 'フォローする'
-      }
-      
+  created() {
+    if (this.state) {
+      this.stateMessage = this.state;
+      this.showMessage = "フォロー中";
+    } else {
+      this.stateMessage = this.state;
+      this.showMessage = "フォローする";
+    }
   },
   methods: {
     goUser() {
@@ -60,7 +83,7 @@ export default {
         .then(response => {
           console.log(response);
           this.stateMessage = true;
-          this.showMessage = 'フォロー中'
+          this.showMessage = "フォロー中";
         });
     },
     async unFollow() {
@@ -69,7 +92,7 @@ export default {
         .then(response => {
           console.log(response);
           this.stateMessage = false;
-          this.showMessage = 'フォローする'
+          this.showMessage = "フォローする";
         });
     }
   }
@@ -91,12 +114,16 @@ i {
 .user:hover {
   background: rgba(100, 148, 237, 0.322);
 }
-.unfollow{
-    transition:.4s
+.unfollow {
+  transition: 0.4s;
 }
-.unfollow:hover{
-    background-color: rgba(223, 47, 47, 0.925);
+.unfollow:hover {
+  background-color: rgba(223, 47, 47, 0.925);
 }
-
-
+img {
+  display: inline;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+}
 </style>

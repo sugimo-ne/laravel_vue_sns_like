@@ -4,10 +4,14 @@
     <div v-else>
       <div class="post_form mb-3">
         <div class="row border-bottom pl-3 pr-3">
-          <div class="col-1 p-2">
-            <i class="fas fa-user-circle icon"></i>
+          <div class="col-2 p-2">
+            <img v-if="isLogin" :src="`${currentUser.image}`" alt />
+            <i v-else class="fas fa-user-circle icon"></i>
           </div>
-          <div class="col-11 p-2">
+          <div class="col-10 p-2">
+            <output v-if="preview">
+              <img :src="preview" alt class="post_img" />
+            </output>
             <textarea
               class="form-control"
               rows="2"
@@ -15,16 +19,22 @@
               v-model="postData.content"
             ></textarea>
             <br />
-            <div class="actions text-right">
-              <div v-if="postData.content !== ''">
-                <button class="btn btn-info" @click="post">
-                  <i class="fas fa-dove"></i>
-                </button>
+
+            <div class="actions text-right row">
+              <div class="col-3">
+                <input type="file" @change="onFileSelected" />
               </div>
-              <div v-else>
-                <span class="dummy btn btn-info">
-                  <i class="fas fa-dove"></i>
-                </span>
+              <div class="col-3 offset-6">
+                <div v-if="postData.content !== ''">
+                  <button class="btn btn-info" @click="post">
+                    <i class="fas fa-dove"></i>
+                  </button>
+                </div>
+                <div v-else>
+                  <span class="dummy btn btn-info">
+                    <i class="fas fa-dove"></i>
+                  </span>
+                </div>
               </div>
             </div>
           </div>
@@ -57,6 +67,9 @@
 import Posts from "../components/posts/Posts";
 export default {
   computed: {
+    imageUrl(){
+      return this.$store.getters["auth/imageUrl"]
+    },
     isLogin() {
       return this.$store.getters["auth/check"];
     },
@@ -69,6 +82,8 @@ export default {
   },
   data() {
     return {
+      preview: null,
+      fileName: null,
       loading: false,
       posts: [],
       page:1,
@@ -86,17 +101,24 @@ export default {
   },
   methods: {
     post() {
+      const formData = new FormData()
+    formData.append('photo', this.fileName)
+       axios.post("/api/photos", formData).then(response => {
+        console.log(response);
+        this.postData.filename = response.data.photo_name
       console.log(this.postData);
       (this.postData.user_id = this.$store.getters["auth/user"].id),
         axios.post("/api/posts", this.postData).then(response => {
           console.log(response)
           let post = response.data
-          post.user = {name:null}
+          post.user = {name:null , profile:null}
           post.user.name = this.currentUser.name
+          post.user.image = this.currentUser.imageName
           post.comments = []
           this.posts.unshift(post)
           this.postData.content = "";
         });
+         });
     },
     getPosts() {
       axios
@@ -118,36 +140,30 @@ export default {
       console.log('ooooi')
       this.page++
       this.getPosts()
-    }
-   
-    // likeCheck() {
-    //   if (this.liked_by_user) {
-    //     this.unlike();
-    //   } else {
-    //     this.like();
-    //   }
-    // },
-    // async like() {
-    //   const response = await axios.put(`/api/posts/${this.id}/like`);
-    //   if (response.status !== OK) {
-    //     this.$store.commit("error/setErrorCode", response.status);
-    //     return false;
-    //   } else {
-    //     this.likes_count++;
-    //     this.liked_by_user = true;
-    //   }
-    // },
-
-    // async unlike() {
-    //   const response = await axios.delete(`/api/posts/${this.id}/like`);
-    //   if (response.status !== OK) {
-    //     this.$store.commit("error/setErrorCode", response.status);
-    //     return false;
-    //   } else {
-    //     this.likes_count--;
-    //     this.liked_by_user = false;
-    //   }
-    // }
+    },
+   onFileSelected(event) {
+      //console.log(event.target.files[0].type)
+      if (event.target.files.length === 0) {
+        this.reset()
+        return false;
+      }
+      if (!event.target.files[0].type.match("image.*")) {
+        console.log("false");
+        this.reset()
+        return false;
+      }
+      const reader = new FileReader();
+      reader.onload = e => {
+        this.preview = e.target.result;
+      };
+      this.fileName = event.target.files[0]
+      reader.readAsDataURL(event.target.files[0])
+    },
+    reset () {
+    this.preview = ''
+    this.fileName = ''
+    this.$el.querySelector('input[type="file"]').value = null
+  },
   }
 };
 </script>
@@ -177,11 +193,22 @@ textarea {
         font-weight: bold; */
   opacity: 0.5;
 }
-.add_show{
-  transition: .4s;
+.add_show {
+  transition: 0.4s;
   cursor: pointer;
 }
-.add_show:hover{
+.add_show:hover {
   background: rgba(100, 237, 214, 0.719);
+}
+img {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+}
+.post_img {
+  display: block;
+  height: 200px;
+  width: 200px;
+  border-radius: 0%;
 }
 </style>

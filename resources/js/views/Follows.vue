@@ -15,7 +15,8 @@
       <div v-if="tab == 1">
           <div v-for="following in followings" :key="following.id + 'following'">
               <UserCard v-bind="following" 
-        :state="followChecker(following.id)"></UserCard>
+        :state="followChecker(following.id)"
+        :isLogin="isLogin"></UserCard>
           </div>
       </div>
 
@@ -23,6 +24,7 @@
           <div v-for="follower in followers" :key="follower.id + 'follower'">
           <UserCard v-bind="follower" 
          :state="followChecker(follower.id)"
+         :isLogin="isLogin"
         ></UserCard>
         </div>
       </div>
@@ -53,6 +55,9 @@ export default {
     this.getFollows();
   },
   computed: {
+   isLogin() {
+      return this.$store.getters["auth/check"];
+    },
     currentUser() {
       return this.$store.getters["auth/user"];
     },

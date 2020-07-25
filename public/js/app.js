@@ -2031,14 +2031,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   computed: {
     isLogin: function isLogin() {
-      return this.$store.getters['auth/check'];
+      return this.$store.getters["auth/check"];
     },
     user: function user() {
-      return this.$store.getters['auth/user'];
+      return this.$store.getters["auth/user"];
     }
   },
   methods: {
@@ -2051,7 +2060,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return _this.$store.dispatch('auth/logout');
+                return _this.$store.dispatch("auth/logout");
 
               case 2:
               case "end":
@@ -2062,7 +2071,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     toHome: function toHome() {
-      _router__WEBPACK_IMPORTED_MODULE_1__["default"].push('/');
+      _router__WEBPACK_IMPORTED_MODULE_1__["default"].push("/");
     },
     toProfile: function toProfile() {
       _router__WEBPACK_IMPORTED_MODULE_1__["default"].push("/".concat(this.user.id, "/user/profile/posts"));
@@ -2106,6 +2115,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['isLogin', 'user'],
@@ -2113,9 +2123,6 @@ __webpack_require__.r(__webpack_exports__);
     title: function title() {
       return this.$route.name;
     }
-  },
-  mounted: function mounted() {
-    console.log(this.isLogin);
   },
   methods: {
     toProfile: function toProfile() {
@@ -2211,8 +2218,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["id", "image", "intro", "created_at", "name", 'isfollowing', 'state'],
+  props: ["id", "image", "intro", "created_at", "name", "isfollowing", "state", "isLogin"],
+  computed: {
+    imageUrl: function imageUrl() {
+      return this.$store.getters["auth/imageUrl"];
+    },
+    currentUser: function currentUser() {
+      return this.$store.getters["auth/user"];
+    }
+  },
   data: function data() {
     return {
       showMessage: null,
@@ -2222,10 +2244,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   created: function created() {
     if (this.state) {
       this.stateMessage = this.state;
-      this.showMessage = 'フォロー中';
+      this.showMessage = "フォロー中";
     } else {
       this.stateMessage = this.state;
-      this.showMessage = 'フォローする';
+      this.showMessage = "フォローする";
     }
   },
   methods: {
@@ -2251,7 +2273,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return axios.put("/api/user/".concat(_this.id, "/follow")).then(function (response) {
                   console.log(response);
                   _this.stateMessage = true;
-                  _this.showMessage = 'フォロー中';
+                  _this.showMessage = "フォロー中";
                 });
 
               case 2:
@@ -2278,7 +2300,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return axios["delete"]("/api/user/".concat(_this2.id, "/unfollow")).then(function (response) {
                   console.log(response);
                   _this2.stateMessage = false;
-                  _this2.showMessage = 'フォローする';
+                  _this2.showMessage = "フォローする";
                 });
 
               case 2:
@@ -2331,14 +2353,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['commenter', 'image', 'content', 'created_at', 'id', 'commenter_id', 'post_id'],
+  props: ["commenter", "image", "content", "created_at", "id", "commenter_id", "post_id"],
   computed: {
+    imageUrl: function imageUrl() {
+      return this.$store.getters["auth/imageUrl"];
+    },
     isLogin: function isLogin() {
-      return this.$store.getters['auth/check'];
+      return this.$store.getters["auth/check"];
     },
     currentUser: function currentUser() {
-      return this.$store.getters['auth/user'];
+      return this.$store.getters["auth/user"];
     }
   },
   methods: {
@@ -2346,9 +2375,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.post("/api/posts/".concat(this.id, "/comments/delete")).then(function (response) {
-        console.log(response);
-
-        _this.$emit('set');
+        _this.$emit("set");
       });
     }
   }
@@ -2384,10 +2411,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  methods: {// goUser(id){
-    //   this.$router.push(`/${id}/user/profile/posts`)
-    // }
+  computed: {
+    imageUrl: function imageUrl() {
+      return this.$store.getters["auth/imageUrl"];
+    }
+  },
+  methods: {
+    goUser: function goUser() {
+      this.$router.push("/".concat(this.user_id, "/user/profile/posts"));
+    }
   },
   props: {
     id: Number,
@@ -2395,7 +2432,9 @@ __webpack_require__.r(__webpack_exports__);
     created_at: String,
     name: String,
     number: Number,
-    user_id: Number
+    user_id: Number,
+    profile: String,
+    filename: String
   }
 });
 
@@ -2449,6 +2488,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2465,6 +2506,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   computed: {
     commentCount: function commentCount() {
       return this.comments.length;
+    },
+    imageUrl: function imageUrl() {
+      return this.$store.getters["auth/imageUrl"];
     }
   },
   components: {
@@ -2474,8 +2518,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     id: Number,
     content: String,
     created_at: String,
+    filename: String,
     user: {
-      name: String
+      name: String,
+      image: String
     },
     login: Boolean,
     comments: Array,
@@ -2823,7 +2869,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return _this.$store.dispatch('auth/register', _this.registerForm);
+                return _this.$store.dispatch('auth/register', _this.registerForm).then(function () {});
 
               case 2:
                 console.log(_this.registerError);
@@ -2885,6 +2931,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2907,6 +2955,9 @@ __webpack_require__.r(__webpack_exports__);
     this.getFollows();
   },
   computed: {
+    isLogin: function isLogin() {
+      return this.$store.getters["auth/check"];
+    },
     currentUser: function currentUser() {
       return this.$store.getters["auth/user"];
     }
@@ -3009,9 +3060,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   computed: {
+    imageUrl: function imageUrl() {
+      return this.$store.getters["auth/imageUrl"];
+    },
     isLogin: function isLogin() {
       return this.$store.getters["auth/check"];
     },
@@ -3024,6 +3088,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      preview: null,
+      fileName: null,
       loading: false,
       posts: [],
       page: 1,
@@ -3043,19 +3109,27 @@ __webpack_require__.r(__webpack_exports__);
     post: function post() {
       var _this = this;
 
-      console.log(this.postData);
-      this.postData.user_id = this.$store.getters["auth/user"].id, axios.post("/api/posts", this.postData).then(function (response) {
+      var formData = new FormData();
+      formData.append('photo', this.fileName);
+      axios.post("/api/photos", formData).then(function (response) {
         console.log(response);
-        var post = response.data;
-        post.user = {
-          name: null
-        };
-        post.user.name = _this.currentUser.name;
-        post.comments = [];
+        _this.postData.filename = response.data.photo_name;
+        console.log(_this.postData);
+        _this.postData.user_id = _this.$store.getters["auth/user"].id, axios.post("/api/posts", _this.postData).then(function (response) {
+          console.log(response);
+          var post = response.data;
+          post.user = {
+            name: null,
+            profile: null
+          };
+          post.user.name = _this.currentUser.name;
+          post.user.image = _this.currentUser.imageName;
+          post.comments = [];
 
-        _this.posts.unshift(post);
+          _this.posts.unshift(post);
 
-        _this.postData.content = "";
+          _this.postData.content = "";
+        });
       });
     },
     getPosts: function getPosts() {
@@ -3075,34 +3149,36 @@ __webpack_require__.r(__webpack_exports__);
       console.log('ooooi');
       this.page++;
       this.getPosts();
-    } // likeCheck() {
-    //   if (this.liked_by_user) {
-    //     this.unlike();
-    //   } else {
-    //     this.like();
-    //   }
-    // },
-    // async like() {
-    //   const response = await axios.put(`/api/posts/${this.id}/like`);
-    //   if (response.status !== OK) {
-    //     this.$store.commit("error/setErrorCode", response.status);
-    //     return false;
-    //   } else {
-    //     this.likes_count++;
-    //     this.liked_by_user = true;
-    //   }
-    // },
-    // async unlike() {
-    //   const response = await axios.delete(`/api/posts/${this.id}/like`);
-    //   if (response.status !== OK) {
-    //     this.$store.commit("error/setErrorCode", response.status);
-    //     return false;
-    //   } else {
-    //     this.likes_count--;
-    //     this.liked_by_user = false;
-    //   }
-    // }
+    },
+    onFileSelected: function onFileSelected(event) {
+      var _this3 = this;
 
+      //console.log(event.target.files[0].type)
+      if (event.target.files.length === 0) {
+        this.reset();
+        return false;
+      }
+
+      if (!event.target.files[0].type.match("image.*")) {
+        console.log("false");
+        this.reset();
+        return false;
+      }
+
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+        _this3.preview = e.target.result;
+      };
+
+      this.fileName = event.target.files[0];
+      reader.readAsDataURL(event.target.files[0]);
+    },
+    reset: function reset() {
+      this.preview = '';
+      this.fileName = '';
+      this.$el.querySelector('input[type="file"]').value = null;
+    }
   }
 });
 
@@ -3239,11 +3315,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   computed: {
+    imageUrl: function imageUrl() {
+      return this.$store.getters["auth/imageUrl"];
+    },
     isLogin: function isLogin() {
       return this.$store.getters["auth/check"];
     },
@@ -3502,11 +3584,51 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["id"],
   computed: {
+    imageUrl: function imageUrl() {
+      return this.$store.getters["auth/imageUrl"];
+    },
     isLogin: function isLogin() {
       return this.$store.getters["auth/check"];
     },
@@ -3515,6 +3637,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     following: function following() {
       return this.user.followings.length;
+    },
+    postsReverse: function postsReverse() {
+      if (this.posts) {
+        return this.posts.slice().reverse();
+      }
+
+      return false;
+    },
+    commentsReverse: function commentsReverse() {
+      if (this.comments) {
+        return this.comments.slice().reverse();
+      }
+
+      return false;
     } // follower(){
     //   return this.user.followers.length;
     // },
@@ -3526,6 +3662,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
+      editInfo: {
+        id: null,
+        name: null,
+        intro: null,
+        image: null
+      },
+      preview: null,
+      fileName: null,
+      modal: false,
       tab: null,
       loading: false,
       user: null,
@@ -3535,8 +3680,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       follower: null
     };
   },
+  mounted: function mounted() {
+    if (this.isLogin) {
+      this.editInfo.id = this.currentUser.id;
+      this.editInfo.name = this.currentUser.name;
+      this.editInfo.image = this.currentUser.image;
+      this.editInfo.intro = this.currentUser.intro;
+    }
+  },
   created: function created() {
     this.fetchData();
+
+    if (this.isLogin) {
+      this.editInfo.image = this.currentUser.image;
+    }
   },
   methods: {
     fetchData: function fetchData() {
@@ -3552,9 +3709,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         _this.loading = false;
         var name = _this.$route.name;
 
-        if (name == '投稿') {
+        if (name == "投稿") {
           _this.tab = 1;
-        } else if (name == 'コメント') {
+        } else if (name == "コメント") {
           _this.tab = 2;
         } else {
           _this.tab = 3;
@@ -3562,14 +3719,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
         _this.follower = _this.user.followers.length;
 
-        var check = _this.user.followers.filter(function (e) {
-          return e.id == _this.currentUser.id;
-        });
+        if (_this.isLogin) {
+          var check = _this.user.followers.filter(function (e) {
+            return e.id == _this.currentUser.id;
+          });
 
-        if (check.length > 0) {
-          _this.isfollowing = true;
-        } else {
-          _this.isfollowing = false;
+          if (check.length > 0) {
+            _this.isfollowing = true;
+          } else {
+            _this.isfollowing = false;
+          }
         }
       });
     },
@@ -3641,6 +3800,62 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     goFollow: function goFollow() {
       this.$router.push("/follows/".concat(this.id, "/").concat(this.user.name));
+    },
+    onFileSelected: function onFileSelected(event) {
+      var _this4 = this;
+
+      //console.log(event.target.files[0].type)
+      if (event.target.files.length === 0) {
+        this.reset();
+        return false;
+      }
+
+      if (!event.target.files[0].type.match("image.*")) {
+        console.log("false");
+        this.reset();
+        return false;
+      }
+
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+        _this4.preview = e.target.result;
+      };
+
+      this.fileName = event.target.files[0];
+      reader.readAsDataURL(event.target.files[0]);
+    },
+    reset: function reset() {
+      this.preview = "";
+      this.fileName = "";
+      this.$el.querySelector('input[type="file"]').value = null;
+    },
+    editUser: function editUser() {
+      var _this5 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var formData;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                formData = new FormData();
+                formData.append("photo", _this5.fileName);
+                _context3.next = 4;
+                return axios.post("/api/photos", formData).then(function (response) {
+                  console.log(response);
+                  _this5.editInfo.image = response.data.photo_name;
+
+                  _this5.$store.dispatch("auth/editUser", _this5.editInfo);
+                });
+
+              case 4:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
     }
   },
   watch: {
@@ -3721,15 +3936,33 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   computed: {
     isLogin: function isLogin() {
       return this.$store.getters["auth/check"];
-    },
-    likesReverse: function likesReverse() {
-      return this.likesArr.slice().reverse();
-    }
+    } // likesReverse() {
+    //   return this.likes.slice().reverse();
+    // }
+
   },
   components: {
     Post: _components_posts_Post__WEBPACK_IMPORTED_MODULE_0__["default"]
@@ -3738,8 +3971,8 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       loading: false,
-      likes: null,
-      likesArr: []
+      likes: null //likesArr: []
+
     };
   },
   methods: {
@@ -3752,26 +3985,25 @@ __webpack_require__.r(__webpack_exports__);
 
     this.loading = true;
     axios.get("/api/user/likes/".concat(this.aboutUser)).then(function (response) {
-      _this.likes = response.data;
-      var likes = [];
-      var length = Object.values(_this.likes).length;
+      console.log(response.data.posts);
+      _this.likes = response.data.posts; // let likes = [];
+      // let length = Object.values(this.likes).length;
+      // for (let i = 0; i < length; i++) {
+      //   let like = this.likes[i];
+      //   likes.push(like);
+      //   // this.likesArr.push(like)
+      //   console.log(likes);
+      // }
+      // let likesArr = [];
+      // likes.forEach((item, index) => {
+      //   axios.get(`/api/${item.user_id}`).then(response => {
+      //     likes[index].user = response.data.name;
+      //     likesArr.push(likes[index]);
+      //   });
+      // });
+      // console.log(likesArr);
+      // this.likesArr = likesArr;
 
-      for (var i = 0; i < length; i++) {
-        var like = _this.likes[i];
-        likes.push(like); // this.likesArr.push(like)
-
-        console.log(likes);
-      }
-
-      var likesArr = [];
-      likes.forEach(function (item, index) {
-        axios.get("/api/".concat(item.user_id)).then(function (response) {
-          likes[index].user = response.data.name;
-          likesArr.push(likes[index]);
-        });
-      });
-      console.log(likesArr);
-      _this.likesArr = likesArr;
       _this.loading = false;
     });
   }
@@ -3838,7 +4070,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.left_bar[data-v-7d8e95f1]{\n       z-index:10;\n       width:25%;\n       background:white;\n       height:100vh;\n       overflow-y: scroll;\n       position:fixed;\n}\nul[data-v-7d8e95f1]{\n       padding:20px;\n       list-style-type: none;\n}\nli[data-v-7d8e95f1]{\n       padding:8px 15px;\n       border-radius: 20px;\n       margin:10px;\n       font-size:1.5rem;\n       transition:0.4s;\n}\nli[data-v-7d8e95f1]:hover{\n       background: rgba(168, 155, 155, 0.459);\n}\n.action[data-v-7d8e95f1]{\n       background: rgba(168, 155, 155, 0.459);\n}\n\n", ""]);
+exports.push([module.i, "\n.left_bar[data-v-7d8e95f1] {\n  z-index: 10;\n  width: 25%;\n  background: white;\n  height: 100vh;\n  overflow-y: scroll;\n  position: fixed;\n}\nul[data-v-7d8e95f1] {\n  padding: 20px;\n  list-style-type: none;\n}\nli[data-v-7d8e95f1] {\n  padding: 8px 15px;\n  border-radius: 20px;\n  margin: 10px;\n  font-size: 1.5rem;\n  transition: 0.4s;\n}\nli[data-v-7d8e95f1]:hover {\n  background: rgba(168, 155, 155, 0.459);\n}\n.action[data-v-7d8e95f1] {\n  background: rgba(168, 155, 155, 0.459);\n}\n", ""]);
 
 // exports
 
@@ -3857,7 +4089,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\ni[data-v-5dd24bca]{\n    font-size: 2rem;\n}\n.nav[data-v-5dd24bca]{\n    z-index:10;\n    background: white;\n    height:55px;\n    position: fixed;\n}\n.back[data-v-5dd24bca]{\n    border-radius: 50px;\n    padding:12px 20px;\n    font-size:2rem;\n    float: left;\n    transition:0.4s;\n}\n.back[data-v-5dd24bca]:hover{\n    background: rgba(128, 128, 128, 0.493);\n}\n\n", ""]);
+exports.push([module.i, "\ni[data-v-5dd24bca]{\n    font-size: 2rem;\n}\n.nav[data-v-5dd24bca]{\n    z-index:10;\n    background: white;\n    height:55px;\n    position: fixed;\n    overflow: hidden;\n}\n.back[data-v-5dd24bca]{\n    border-radius: 50px;\n    padding:12px 20px;\n    font-size:2rem;\n    float: left;\n    transition:0.4s;\n}\n.back[data-v-5dd24bca]:hover{\n    background: rgba(128, 128, 128, 0.493);\n}\nimg[data-v-5dd24bca]{\n    display: inline;\n    height:40px;\n    width:40px;\n    border-radius: 50%;\n}\nh1[data-v-5dd24bca]{\n    padding:15px;\n    font-size:1rem;\n}\n\n", ""]);
 
 // exports
 
@@ -3895,7 +4127,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\ni[data-v-28284534] {\n  font-size: 3rem;\n}\n.owner[data-v-28284534] {\n  font-size: 0.8rem;\n  font-weight: bold;\n}\n.user[data-v-28284534] {\n  transition: 0.4s;\n}\n.user[data-v-28284534]:hover {\n  background: rgba(100, 148, 237, 0.322);\n}\n.unfollow[data-v-28284534]{\n    transition:.4s\n}\n.unfollow[data-v-28284534]:hover{\n    background-color: rgba(223, 47, 47, 0.925);\n}\n\n\n", ""]);
+exports.push([module.i, "\ni[data-v-28284534] {\n  font-size: 3rem;\n}\n.owner[data-v-28284534] {\n  font-size: 0.8rem;\n  font-weight: bold;\n}\n.user[data-v-28284534] {\n  transition: 0.4s;\n}\n.user[data-v-28284534]:hover {\n  background: rgba(100, 148, 237, 0.322);\n}\n.unfollow[data-v-28284534] {\n  transition: 0.4s;\n}\n.unfollow[data-v-28284534]:hover {\n  background-color: rgba(223, 47, 47, 0.925);\n}\nimg[data-v-28284534] {\n  display: inline;\n  height: 50px;\n  width: 50px;\n  border-radius: 50%;\n}\n", ""]);
 
 // exports
 
@@ -3914,7 +4146,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\ni[data-v-43cade48]{\n     font-size: 3rem;\n}\n.owner[data-v-43cade48]{\n     font-size:0.8rem;\n     font-weight:bold;\n}\n.delete[data-v-43cade48]{\n     font-size:1rem;\n}\n", ""]);
+exports.push([module.i, "\ni[data-v-43cade48] {\n  font-size: 3rem;\n}\n.owner[data-v-43cade48] {\n  font-size: 0.8rem;\n  font-weight: bold;\n}\n.delete[data-v-43cade48] {\n  font-size: 1rem;\n}\nimg[data-v-43cade48]{\n        display: inline;\n        height:50px;\n        width:50px;\n        border-radius: 50%;\n}\n", ""]);
 
 // exports
 
@@ -3933,7 +4165,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\ni[data-v-16291007] {\n  font-size: 3rem;\n}\n.owner[data-v-16291007] {\n  font-size: 0.8rem;\n  font-weight: bold;\n}\n\n", ""]);
+exports.push([module.i, "\ni[data-v-16291007] {\n  font-size: 3rem;\n}\n.owner[data-v-16291007] {\n  font-size: 0.8rem;\n  font-weight: bold;\n}\nimg[data-v-16291007] {\n  display: inline;\n  height: 50px;\n  width: 50px;\n  border-radius: 50%;\n}\n.post_show_image[data-v-16291007] {\n  display: block;\n  /* height: 300px; */\n  width: 85%;\n  height:auto;\n  border-radius: 8%;\n}\n.user_link[data-v-16291007]{\n  transition:.4s;\n    cursor: pointer;\n}\n.user_link[data-v-16291007]:hover{\n background: rgba(42, 85, 150, 0.35);\n}\n", ""]);
 
 // exports
 
@@ -4028,7 +4260,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\nul[data-v-63cd6604] {\n  padding: 0;\n  list-style-type: none;\n}\n.icon[data-v-63cd6604] {\n  font-size: 3rem;\n}\ntextarea[data-v-63cd6604] {\n  border: none;\n  resize: none;\n}\n.back[data-v-63cd6604] {\n  background: rgb(240, 240, 240);\n}\n.post_area[data-v-63cd6604],\n.post_form[data-v-63cd6604] {\n  background: white;\n}\n.dummy[data-v-63cd6604] {\n  /* color:white;\n        font-weight: bold; */\n  opacity: 0.5;\n}\n.add_show[data-v-63cd6604]{\n  transition: .4s;\n  cursor: pointer;\n}\n.add_show[data-v-63cd6604]:hover{\n  background: rgba(100, 237, 214, 0.719);\n}\n", ""]);
+exports.push([module.i, "\nul[data-v-63cd6604] {\n  padding: 0;\n  list-style-type: none;\n}\n.icon[data-v-63cd6604] {\n  font-size: 3rem;\n}\ntextarea[data-v-63cd6604] {\n  border: none;\n  resize: none;\n}\n.back[data-v-63cd6604] {\n  background: rgb(240, 240, 240);\n}\n.post_area[data-v-63cd6604],\n.post_form[data-v-63cd6604] {\n  background: white;\n}\n.dummy[data-v-63cd6604] {\n  /* color:white;\n        font-weight: bold; */\n  opacity: 0.5;\n}\n.add_show[data-v-63cd6604] {\n  transition: 0.4s;\n  cursor: pointer;\n}\n.add_show[data-v-63cd6604]:hover {\n  background: rgba(100, 237, 214, 0.719);\n}\nimg[data-v-63cd6604] {\n  height: 50px;\n  width: 50px;\n  border-radius: 50%;\n}\n.post_img[data-v-63cd6604] {\n  display: block;\n  height: 200px;\n  width: 200px;\n  border-radius: 0%;\n}\n", ""]);
 
 // exports
 
@@ -4047,7 +4279,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.fade-enter[data-v-f1451a20],\n.fade-leave-to[data-v-f1451a20] {\n  opacity: 0;\n}\n.fade-enter-to[data-v-f1451a20],\n.fade-leave[data-v-f1451a20] {\n  opacity: 1;\n}\n.fade-enter-active[data-v-f1451a20],\n.fade-leave-active[data-v-f1451a20] {\n  transition: opacity 0.3s;\n}\n.main[data-v-f1451a20] {\n  /* height:100vh;\n        overflow: scroll;\n        position:relative; */\n}\n.modal_cover[data-v-f1451a20] {\n  background: rgba(0, 0, 0, 0.5);\n  height: 100vh;\n  position: absolute;\n  width: 100%;\n  z-index: 14;\n}\n.modal_content[data-v-f1451a20] {\n  z-index: 15;\n  position: absolute;\n  top: 50%;\n  transform: translate(-50%, -50%);\n  left: 50%;\n  background: white;\n  padding: 40px;\n  width: 60%;\n}\n.info[data-v-f1451a20] {\n  font-size: 0.7rem;\n  font-weight: bold;\n}\n.actions[data-v-f1451a20] {\n  text-align: center;\n}\n.icon[data-v-f1451a20] {\n  font-size: 3rem;\n}\ntextarea[data-v-f1451a20] {\n  border: none;\n  resize: none;\n}\n.post_area[data-v-f1451a20],\n.post_form[data-v-f1451a20] {\n  background: white;\n}\n.dummy[data-v-f1451a20] {\n  /* color:white;\n        font-weight: bold; */\n  opacity: 0.5;\n}\n/* .comment_form{\n        position:absolute;\n        bottom:0;\n    } */\n.form_active[data-v-f1451a20] {\n  color: brown;\n}\n.liked[data-v-f1451a20]{\n  transition: 0.7s;\n  color:rgba(233, 40, 40, 0.74);\n}\n.user_link[data-v-f1451a20]{\n  transition:.4s\n}\n.user_link[data-v-f1451a20]:hover{\n background: rgba(100, 148, 237, 0.15);\n}\n", ""]);
+exports.push([module.i, "\n.fade-enter[data-v-f1451a20],\n.fade-leave-to[data-v-f1451a20] {\n  opacity: 0;\n}\n.fade-enter-to[data-v-f1451a20],\n.fade-leave[data-v-f1451a20] {\n  opacity: 1;\n}\n.fade-enter-active[data-v-f1451a20],\n.fade-leave-active[data-v-f1451a20] {\n  transition: opacity 0.3s;\n}\n.main[data-v-f1451a20] {\n  /* height:100vh;\n        overflow: scroll;\n        position:relative; */\n}\n.modal_cover[data-v-f1451a20] {\n  background: rgba(0, 0, 0, 0.5);\n  height: 100vh;\n  position: absolute;\n  width: 100%;\n  z-index: 14;\n}\n.modal_content[data-v-f1451a20] {\n  z-index: 15;\n  position: absolute;\n  top: 50%;\n  transform: translate(-50%, -50%);\n  left: 50%;\n  background: white;\n  padding: 40px;\n  width: 60%;\n}\n.info[data-v-f1451a20] {\n  font-size: 0.7rem;\n  font-weight: bold;\n}\n.actions[data-v-f1451a20] {\n  text-align: center;\n}\n.icon[data-v-f1451a20] {\n  font-size: 3rem;\n}\ntextarea[data-v-f1451a20] {\n  border: none;\n  resize: none;\n}\n.post_area[data-v-f1451a20],\n.post_form[data-v-f1451a20] {\n  background: white;\n}\n.dummy[data-v-f1451a20] {\n  /* color:white;\n        font-weight: bold; */\n  opacity: 0.5;\n}\n/* .comment_form{\n        position:absolute;\n        bottom:0;\n    } */\n.form_active[data-v-f1451a20] {\n  color: brown;\n}\n.liked[data-v-f1451a20]{\n  transition: 0.7s;\n  color:rgba(233, 40, 40, 0.74);\n}\n/* .user_link{\n  transition:.4s\n}\n.user_link:hover{\n background: rgba(100, 148, 237, 0.15);\n} */\n\n", ""]);
 
 // exports
 
@@ -4066,7 +4298,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.profile[data-v-25b9215a] {\n  font-size: 4.5rem;\n}\nh1[data-v-25b9215a] {\n  font-size: 1.5rem;\n}\nul[data-v-25b9215a] {\n  padding: 0;\n  list-style-type: none;\n}\n.tab[data-v-25b9215a] {\n  padding: 10px 0;\n}\n.tab[data-v-25b9215a]:hover {\n  transition: 0.4s;\n  background: rgba(100, 148, 237, 0.322);\n}\n.active_tab[data-v-25b9215a] {\n  background: rgba(100, 148, 237, 0.322);\n}\n.follows[data-v-25b9215a]{\n  transition: .4s;\n  cursor: pointer;\n}\n.follows[data-v-25b9215a]:hover{\n  background: rgba(100, 148, 237, 0.322);\n}\n", ""]);
+exports.push([module.i, "\n.fixed[data-v-25b9215a] {\n  position: fixed;\n  width: 50%;\n}\n.profile[data-v-25b9215a] {\n  font-size: 4.5rem;\n}\nh1[data-v-25b9215a] {\n  font-size: 1.5rem;\n}\nul[data-v-25b9215a] {\n  padding: 0;\n  list-style-type: none;\n}\n.tab[data-v-25b9215a] {\n  padding: 10px 0;\n}\n.tab[data-v-25b9215a]:hover {\n  transition: 0.4s;\n  background: rgba(100, 148, 237, 0.322);\n}\n.active_tab[data-v-25b9215a] {\n  background: rgba(100, 148, 237, 0.322);\n}\n.follows[data-v-25b9215a] {\n  transition: 0.4s;\n  cursor: pointer;\n}\n.follows[data-v-25b9215a]:hover {\n  background: rgba(100, 148, 237, 0.322);\n}\n.my_modal_back[data-v-25b9215a] {\n  position: absolute;\n  z-index: 100;\n  background-color: rgba(0, 0, 0, 0.356);\n  width: 100%;\n  height: 100vh;\n}\n.my_modal_content[data-v-25b9215a] {\n  width: 85%;\n  left: 7.5%;\n  margin: 30px auto;\n  z-index: 150;\n  position: absolute;\n  background-color: white;\n  height: 400px;\n  overflow: scroll;\n  /* padding:30px 45px; */\n}\n.fade-enter-active[data-v-25b9215a],\n.fade-leave-active[data-v-25b9215a] {\n  transition: opacity 0.5s;\n}\n.fade-enter[data-v-25b9215a],\n.fade-leave-to[data-v-25b9215a] {\n  opacity: 0;\n}\nimg[data-v-25b9215a] {\n  height: 100px;\n  width: 100px;\n  border-radius: 50%;\n}\n", ""]);
 
 // exports
 
@@ -23625,23 +23857,24 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "left_bar border-right" }, [
-    _c("h1", [_vm._v("\n        laravel vue bbs\n    ")]),
+    _c("h1", [_vm._v("laravel vue bbs")]),
+    _vm._v(" "),
+    _c("ul", [
+      _c(
+        "li",
+        {
+          class: { action: this.$route.name == "Home" },
+          on: { click: _vm.toHome }
+        },
+        [_c("i", { staticClass: "fas fa-home" }), _vm._v(" ホーム\n    ")]
+      ),
+      _vm._v(" "),
+      _c("li", [_vm._v("\n        ログインで様々な機能が楽しめます\n    ")])
+    ]),
     _vm._v(" "),
     _vm.isLogin
       ? _c("div", [
           _c("ul", [
-            _c(
-              "li",
-              {
-                class: { action: this.$route.name == "Home" },
-                on: { click: _vm.toHome }
-              },
-              [
-                _c("i", { staticClass: "fas fa-home" }),
-                _vm._v(" ホーム\n            ")
-              ]
-            ),
-            _vm._v(" "),
             _c(
               "li",
               {
@@ -23654,7 +23887,7 @@ var render = function() {
               },
               [
                 _c("i", { staticClass: "fas fa-user-friends" }),
-                _vm._v(" フォロー\n            ")
+                _vm._v(" フォロー\n      ")
               ]
             ),
             _vm._v(" "),
@@ -23671,13 +23904,13 @@ var render = function() {
               },
               [
                 _c("i", { staticClass: "fas fa-user-circle" }),
-                _vm._v(" プロフィール\n            ")
+                _vm._v(" プロフィール\n      ")
               ]
             ),
             _vm._v(" "),
             _c("li", { on: { click: _vm.logout } }, [
               _c("i", { staticClass: "fas fa-chevron-circle-left" }),
-              _vm._v(" ログアウト\n            ")
+              _vm._v(" ログアウト\n      ")
             ])
           ])
         ])
@@ -23736,8 +23969,20 @@ var render = function() {
               _c("i", { staticClass: "fas fa-user-circle" }),
               _vm._v("\n        guest\n        ")
             ])
-          : _c("div", { staticClass: "p-3" }, [
-              _c("i", { staticClass: "fas fa-user-circle" }),
+          : _c("div", { staticClass: "p-2" }, [
+              _vm.isLogin
+                ? _c("img", {
+                    staticClass: "img-fluid",
+                    attrs: { src: "" + _vm.user.image, alt: "" }
+                  })
+                : _c("i", { staticClass: "fas fa-user-circle" }, [
+                    _vm.isLogin
+                      ? _c("img", {
+                          staticClass: "img-fluid",
+                          attrs: { src: _vm.user.image, alt: "不具合" }
+                        })
+                      : _vm._e()
+                  ]),
               _vm._v("\n            " + _vm._s(_vm.user.name) + "\n        ")
             ])
       ]
@@ -23807,7 +24052,15 @@ var render = function() {
           }
         }
       },
-      [_c("i", { staticClass: "fas fa-user-circle" }), _vm._v(" "), _c("br")]
+      [
+        _vm.image
+          ? _c("img", {
+              attrs: { src: "" + _vm.imageUrl + _vm.image, alt: "" }
+            })
+          : _c("i", { staticClass: "fas fa-user-circle" }),
+        _vm._v(" "),
+        _c("br")
+      ]
     ),
     _vm._v(" "),
     _c(
@@ -23836,39 +24089,56 @@ var render = function() {
       ]
     ),
     _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "col-3" },
-      [
-        _c("transition", { attrs: { name: "fade", mode: "out-in" } }, [
-          _c(
-            "div",
-            { on: { mouseleave: _vm.mouseLeave, mouseover: _vm.mouseOver } },
-            [
-              _vm.stateMessage
-                ? _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-primary unfollow",
-                      on: { click: _vm.unFollow }
-                    },
-                    [_vm._v(_vm._s(_vm.showMessage))]
-                  )
-                : _vm._e()
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        !_vm.stateMessage
-          ? _c(
-              "button",
-              { staticClass: "btn btn-info", on: { click: _vm.follow } },
-              [_vm._v(_vm._s(_vm.showMessage))]
-            )
-          : _vm._e()
-      ],
-      1
-    )
+    _vm.isLogin
+      ? _c("div", { staticClass: "col-3" }, [
+          _vm.currentUser.id == _vm.id
+            ? _c("div")
+            : _c(
+                "div",
+                [
+                  _c(
+                    "transition",
+                    { attrs: { name: "fade", mode: "out-in" } },
+                    [
+                      _c(
+                        "div",
+                        {
+                          on: {
+                            mouseleave: _vm.mouseLeave,
+                            mouseover: _vm.mouseOver
+                          }
+                        },
+                        [
+                          _vm.stateMessage
+                            ? _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-primary unfollow",
+                                  on: { click: _vm.unFollow }
+                                },
+                                [_vm._v(_vm._s(_vm.showMessage))]
+                              )
+                            : _vm._e()
+                        ]
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  !_vm.stateMessage
+                    ? _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-info",
+                          on: { click: _vm.follow }
+                        },
+                        [_vm._v(_vm._s(_vm.showMessage))]
+                      )
+                    : _vm._e()
+                ],
+                1
+              )
+        ])
+      : _vm._e()
   ])
 }
 var staticRenderFns = []
@@ -23896,14 +24166,24 @@ var render = function() {
   return _c("div", [
     _c("div", { staticClass: "select border-top" }, [
       _c("div", { staticClass: "row no-gutters p-2" }, [
-        _vm._m(0),
+        _c("div", { staticClass: "col-1 text-center p-2" }, [
+          _vm.image
+            ? _c("div", [
+                _c("img", {
+                  attrs: { src: "" + _vm.imageUrl + _vm.image, alt: "" }
+                })
+              ])
+            : _c("i", { staticClass: "fas fa-user-circle" }),
+          _vm._v(" "),
+          _c("br")
+        ]),
         _vm._v(" "),
         _c("div", { staticClass: "col-11 pl-2" }, [
           _c("span", { staticClass: "owner" }, [
             _c("span", { staticClass: "mr-5" }, [
               _vm._v(_vm._s(_vm.commenter))
             ]),
-            _vm._v(_vm._s(_vm.created_at))
+            _vm._v("\n          " + _vm._s(_vm.created_at) + "\n        ")
           ]),
           _vm._v(" "),
           _vm.isLogin
@@ -23921,30 +24201,13 @@ var render = function() {
           _vm._v(" "),
           _c("br"),
           _vm._v(" "),
-          _c("p", { staticClass: "pl-3 pt-2" }, [
-            _vm._v(
-              "\n                    " +
-                _vm._s(_vm.content) +
-                "\n                "
-            )
-          ])
+          _c("p", { staticClass: "pl-3 pt-2" }, [_vm._v(_vm._s(_vm.content))])
         ])
       ])
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-1 text-center p-2" }, [
-      _c("i", { staticClass: "fas fa-user-circle" }),
-      _vm._v(" "),
-      _c("br")
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -23968,33 +24231,62 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "row no-gutters p-2" }, [
-      _vm._m(0),
+      _c(
+        "div",
+        {
+          staticClass: "col-1 text-center p-2 ",
+          on: {
+            click: function($event) {
+              return _vm.goUser()
+            }
+          }
+        },
+        [
+          _vm.profile
+            ? _c("img", {
+                staticClass: "user_link",
+                attrs: { src: "" + _vm.imageUrl + _vm.profile, alt: "" }
+              })
+            : _c("i", { staticClass: "fas fa-user-circle user_link" }),
+          _vm._v(" "),
+          _c("br")
+        ]
+      ),
       _vm._v(" "),
       _c("div", { staticClass: "col-11 pl-2" }, [
-        _c("span", { staticClass: "owner " }, [
-          _c("span", { staticClass: "mr-5" }, [_vm._v(_vm._s(_vm.name))]),
-          _vm._v("\n        " + _vm._s(_vm.created_at) + "\n      ")
-        ]),
+        _c(
+          "p",
+          {
+            staticClass: "owner user_link",
+            on: {
+              click: function($event) {
+                return _vm.goUser()
+              }
+            }
+          },
+          [
+            _c("span", { staticClass: "mr-5" }, [_vm._v(_vm._s(_vm.name))]),
+            _vm._v("\n        " + _vm._s(_vm.created_at) + "\n      ")
+          ]
+        ),
         _vm._v(" "),
         _c("br"),
+        _vm._v(" "),
+        _vm.filename
+          ? _c("div", { staticClass: "text-center" }, [
+              _c("img", {
+                staticClass: "post_show_image",
+                attrs: { src: "" + _vm.imageUrl + _vm.filename, alt: "" }
+              })
+            ])
+          : _vm._e(),
         _vm._v(" "),
         _c("p", { staticClass: "pl-3 pt-2" }, [_vm._v(_vm._s(_vm.content))])
       ])
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-1 text-center p-2" }, [
-      _c("i", { staticClass: "fas fa-user-circle " }),
-      _vm._v(" "),
-      _c("br")
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -24028,7 +24320,9 @@ var render = function() {
               id: _vm.id,
               content: _vm.content,
               created_at: _vm.created_at,
-              name: _vm.user.name
+              name: _vm.user.name,
+              profile: _vm.user.image,
+              filename: _vm.filename
             }
           })
         ],
@@ -24495,7 +24789,12 @@ var render = function() {
                   _c(
                     "UserCard",
                     _vm._b(
-                      { attrs: { state: _vm.followChecker(following.id) } },
+                      {
+                        attrs: {
+                          state: _vm.followChecker(following.id),
+                          isLogin: _vm.isLogin
+                        }
+                      },
                       "UserCard",
                       following,
                       false
@@ -24520,7 +24819,12 @@ var render = function() {
                   _c(
                     "UserCard",
                     _vm._b(
-                      { attrs: { state: _vm.followChecker(follower.id) } },
+                      {
+                        attrs: {
+                          state: _vm.followChecker(follower.id),
+                          isLogin: _vm.isLogin
+                        }
+                      },
                       "UserCard",
                       follower,
                       false
@@ -24564,9 +24868,24 @@ var render = function() {
       : _c("div", [
           _c("div", { staticClass: "post_form mb-3" }, [
             _c("div", { staticClass: "row border-bottom pl-3 pr-3" }, [
-              _vm._m(0),
+              _c("div", { staticClass: "col-2 p-2" }, [
+                _vm.isLogin
+                  ? _c("img", {
+                      attrs: { src: "" + _vm.currentUser.image, alt: "" }
+                    })
+                  : _c("i", { staticClass: "fas fa-user-circle icon" })
+              ]),
               _vm._v(" "),
-              _c("div", { staticClass: "col-11 p-2" }, [
+              _c("div", { staticClass: "col-10 p-2" }, [
+                _vm.preview
+                  ? _c("output", [
+                      _c("img", {
+                        staticClass: "post_img",
+                        attrs: { src: _vm.preview, alt: "" }
+                      })
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
                 _c("textarea", {
                   directives: [
                     {
@@ -24591,19 +24910,28 @@ var render = function() {
                 _vm._v(" "),
                 _c("br"),
                 _vm._v(" "),
-                _c("div", { staticClass: "actions text-right" }, [
-                  _vm.postData.content !== ""
-                    ? _c("div", [
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-info",
-                            on: { click: _vm.post }
-                          },
-                          [_c("i", { staticClass: "fas fa-dove" })]
-                        )
-                      ])
-                    : _c("div", [_vm._m(1)])
+                _c("div", { staticClass: "actions text-right row" }, [
+                  _c("div", { staticClass: "col-3" }, [
+                    _c("input", {
+                      attrs: { type: "file" },
+                      on: { change: _vm.onFileSelected }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-3 offset-6" }, [
+                    _vm.postData.content !== ""
+                      ? _c("div", [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-info",
+                              on: { click: _vm.post }
+                            },
+                            [_c("i", { staticClass: "fas fa-dove" })]
+                          )
+                        ])
+                      : _c("div", [_vm._m(0)])
+                  ])
                 ])
               ])
             ])
@@ -24656,14 +24984,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-1 p-2" }, [
-      _c("i", { staticClass: "fas fa-user-circle icon" })
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -24755,14 +25075,7 @@ var render = function() {
               _c("div", { staticClass: "container" }, [
                 _c(
                   "div",
-                  {
-                    staticClass: "user_link",
-                    on: {
-                      click: function($event) {
-                        return _vm.goUser()
-                      }
-                    }
-                  },
+                  { staticClass: "user_link" },
                   [
                     _c("Post", {
                       attrs: {
@@ -24771,7 +25084,9 @@ var render = function() {
                         content: _vm.post.content,
                         created_at: _vm.post.created_at,
                         name: _vm.post.user.name,
-                        user_id: _vm.post.user.id
+                        user_id: _vm.post.user.id,
+                        profile: _vm.post.user.image,
+                        filename: _vm.post.filename
                       }
                     })
                   ],
@@ -24920,7 +25235,8 @@ var render = function() {
                         commenter: comment.commenter.name,
                         commenter_id: comment.commenter.id,
                         content: comment.content,
-                        created_at: comment.created_at
+                        created_at: comment.created_at,
+                        image: comment.commenter.image
                       },
                       on: { set: _vm.getPostDetail }
                     })
@@ -24982,17 +25298,159 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
+  return _c("div", { class: { fixed: _vm.modal } }, [
     _vm.loading
       ? _c("div", [
           _c("h1", [_vm._v("プロフィール")]),
           _vm._v("now loading ...\n  ")
         ])
       : _c("div", [
+          _vm.modal
+            ? _c(
+                "div",
+                { staticClass: "my_modal" },
+                [
+                  _c("div", { staticClass: "my_modal_back" }),
+                  _vm._v(" "),
+                  _c("transition", { attrs: { name: "fade", appear: "" } }, [
+                    _c("div", { staticClass: "my_modal_content" }, [
+                      _c(
+                        "h5",
+                        { staticClass: "border-bottom p-1 bg-dark text-light" },
+                        [
+                          _vm._v(
+                            _vm._s(_vm.currentUser.name) + " のプロフィール"
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("form", { staticClass: "pl-5 pr-5 pt-3 pb-4" }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", { attrs: { for: "name" } }, [
+                            _vm._v("お名前")
+                          ]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.editInfo.name,
+                                expression: "editInfo.name"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: { type: "text", id: "name" },
+                            domProps: { value: _vm.editInfo.name },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.editInfo,
+                                  "name",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", { attrs: { for: "intro" } }, [
+                            _vm._v("自己紹介")
+                          ]),
+                          _vm._v(" "),
+                          _c("textarea", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.editInfo.intro,
+                                expression: "editInfo.intro"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              name: "",
+                              id: "intro",
+                              cols: "30",
+                              rows: "3"
+                            },
+                            domProps: { value: _vm.editInfo.intro },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.editInfo,
+                                  "intro",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("input", {
+                            attrs: { type: "file" },
+                            on: { change: _vm.onFileSelected }
+                          }),
+                          _vm._v(" "),
+                          _vm.preview
+                            ? _c("output", [
+                                _c("img", {
+                                  staticClass: "image-fluid",
+                                  attrs: { src: _vm.preview, alt: "" }
+                                })
+                              ])
+                            : _vm._e()
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "span",
+                          {
+                            staticClass: "btn btn-danger",
+                            on: {
+                              click: function($event) {
+                                _vm.modal = false
+                              }
+                            }
+                          },
+                          [_vm._v("やめる")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "span",
+                          {
+                            staticClass: "btn btn-info",
+                            on: { click: _vm.editUser }
+                          },
+                          [_vm._v("更新する")]
+                        )
+                      ])
+                    ])
+                  ])
+                ],
+                1
+              )
+            : _vm._e(),
+          _vm._v(" "),
           _c("div", { staticClass: "row" }, [
             _c("div", { staticClass: "col-6" }, [
               _c("div", { staticClass: "p-3" }, [
-                _c("i", { staticClass: "fas fa-user-circle profile" }),
+                _vm.user.image
+                  ? _c("img", {
+                      staticClass: "img-fluid",
+                      attrs: {
+                        src: "" + _vm.imageUrl + _vm.user.image,
+                        alt: ""
+                      }
+                    })
+                  : _c("i", { staticClass: "fas fa-user-circle profile" }),
                 _vm._v(" "),
                 _c("br"),
                 _vm._v(" "),
@@ -25004,9 +25462,18 @@ var render = function() {
               _vm.isLogin
                 ? _c("div", [
                     _vm.id == _vm.currentUser.id
-                      ? _c("button", { staticClass: "btn btn-info" }, [
-                          _vm._v("プロフィールを編集する")
-                        ])
+                      ? _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-info",
+                            on: {
+                              click: function($event) {
+                                _vm.modal = true
+                              }
+                            }
+                          },
+                          [_vm._v("プロフィールを編集する")]
+                        )
                       : _c("div", [
                           !_vm.isfollowing
                             ? _c(
@@ -25097,7 +25564,7 @@ var render = function() {
                 "div",
                 [
                   _c("router-view", {
-                    attrs: { posts: _vm.posts, isLogin: _vm.isLogin }
+                    attrs: { posts: _vm.postsReverse, isLogin: _vm.isLogin }
                   })
                 ],
                 1
@@ -25108,31 +25575,21 @@ var render = function() {
             ? _c("div", [
                 _c(
                   "ul",
-                  _vm._l(_vm.comments, function(comment) {
+                  _vm._l(_vm.commentsReverse, function(comment) {
                     return _c(
                       "li",
                       { key: comment.id },
                       [
-                        _vm.isLogin
-                          ? _c("router-view", {
-                              attrs: {
-                                id: comment.id,
-                                content: comment.content,
-                                image: _vm.currentUser.image,
-                                created_at: comment.created_at,
-                                post_id: comment.post_id,
-                                commenter: _vm.user.name
-                              }
-                            })
-                          : _c("router-view", {
-                              attrs: {
-                                id: comment.id,
-                                content: comment.content,
-                                created_at: comment.created_at,
-                                post_id: comment.post_id,
-                                commenter: _vm.user.name
-                              }
-                            })
+                        _c("router-view", {
+                          attrs: {
+                            id: comment.id,
+                            content: comment.content,
+                            image: _vm.user.image,
+                            created_at: comment.created_at,
+                            post_id: comment.post_id,
+                            commenter: _vm.user.name
+                          }
+                        })
                       ],
                       1
                     )
@@ -25220,7 +25677,7 @@ var render = function() {
       : _c("div", [
           _c(
             "ul",
-            _vm._l(_vm.likesReverse, function(like) {
+            _vm._l(_vm.likes, function(like) {
               return _c(
                 "li",
                 {
@@ -25233,15 +25690,34 @@ var render = function() {
                   }
                 },
                 [
-                  _c("Post", {
-                    attrs: {
-                      id: like.id,
-                      content: like.content,
-                      created_at: like.created_at,
-                      name: like.user,
-                      user_id: like.user_id
-                    }
-                  })
+                  like.user.id
+                    ? _c(
+                        "div",
+                        [
+                          _c("Post", {
+                            attrs: {
+                              id: like.id,
+                              content: like.content,
+                              created_at: like.created_at,
+                              name: like.user.name,
+                              user_id: like.user_id,
+                              profile: like.user.image,
+                              filename: like.filename
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    : _c("Post", {
+                        attrs: {
+                          id: like.id,
+                          content: like.content,
+                          created_at: like.created_at,
+                          name: like.user.name,
+                          user_id: like.image,
+                          filename: like.filename
+                        }
+                      })
                 ],
                 1
               )
@@ -42972,7 +43448,8 @@ var state = {
   user: null,
   apiStatus: null,
   loginErrorMessages: null,
-  registerErrorMessages: null
+  registerErrorMessages: null,
+  baseImageUrl: 'https://my-laravel-vue-work01.s3-ap-northeast-1.amazonaws.com/'
 };
 var getters = {
   check: function check(state) {
@@ -42980,6 +43457,9 @@ var getters = {
   },
   user: function user(state) {
     return state.user;
+  },
+  imageUrl: function imageUrl(state) {
+    return state.baseImageUrl;
   },
   loginErrorMessages: function loginErrorMessages(state) {
     return state.loginErrorMessages;
@@ -42990,6 +43470,11 @@ var getters = {
 };
 var mutations = {
   setUser: function setUser(state, user) {
+    if (user) {
+      user.imageName = user.image;
+      user.image = "https://my-laravel-vue-work01.s3-ap-northeast-1.amazonaws.com/" + user.image || false;
+    }
+
     state.user = user;
   },
   setApiStatus: function setApiStatus(state, status) {
@@ -43091,10 +43576,6 @@ var actions = {
       }, _callee2);
     }))();
   },
-  // async logout(context){
-  //     const response = await axios.post('/api/logout')
-  //     context.commit('setUser' , null)
-  // },
   logout: function logout(context) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
       var response;
@@ -43133,11 +43614,6 @@ var actions = {
       }, _callee3);
     }))();
   },
-  // async currentUser(context){
-  //     const response = await axios.get('/api/user')
-  //     const user = response.data||null
-  //     context.commit('setUser', user)
-  // }
   currentUser: function currentUser(context) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
       var response, user;
@@ -43174,6 +43650,52 @@ var actions = {
           }
         }
       }, _callee4);
+    }))();
+  },
+  editUser: function editUser(context, userInfo) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+      var response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+        while (1) {
+          switch (_context5.prev = _context5.next) {
+            case 0:
+              context.commit('setApiStatus', null);
+              _context5.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default.a.put("/api/".concat(userInfo.id, "/profile/edit"), userInfo)["catch"](function (e) {
+                return e.response || e;
+              });
+
+            case 3:
+              response = _context5.sent;
+              console.log(response);
+
+              if (!(response.status === 201)) {
+                _context5.next = 9;
+                break;
+              }
+
+              context.commit('setApiStatus', true); //context.commit('setUser', response.data.data)
+
+              window.location.reload();
+              return _context5.abrupt("return", false);
+
+            case 9:
+              context.commit('setApiStatus', false);
+
+              if (response.status === _util__WEBPACK_IMPORTED_MODULE_3__["UNPROCESSABLE_ENTITY"]) {
+                context.commit('setLoginErrorMessages', response.data.errors);
+              } else {
+                context.commit('error/setErrorCode', response.status, {
+                  route: true
+                });
+              }
+
+            case 11:
+            case "end":
+              return _context5.stop();
+          }
+        }
+      }, _callee5);
     }))();
   }
 };

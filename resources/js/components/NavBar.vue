@@ -10,8 +10,9 @@
                 <i class="fas fa-user-circle"></i>
             guest
             </div>
-            <div class="p-3" v-else>
-                <i class="fas fa-user-circle"></i>
+            <div class="p-2" v-else>
+                <img v-if="isLogin" class="img-fluid" :src="`${user.image}`" alt="">
+                <i v-else class="fas fa-user-circle"><img v-if="isLogin" class="img-fluid" :src="user.image" alt="不具合"></i>
                 {{user.name}}
             </div>
             
@@ -27,9 +28,6 @@ export default {
         title(){
             return this.$route.name
         }
-    },
-    mounted(){
-        console.log(this.isLogin)
     },
     methods:{
         toProfile(){
@@ -48,6 +46,7 @@ export default {
         background: white;
         height:55px;
         position: fixed;
+        overflow: hidden;
     }
     .back{
         border-radius: 50px;
@@ -58,6 +57,17 @@ export default {
     }
     .back:hover{
         background: rgba(128, 128, 128, 0.493);
+    }
+
+    img{
+        display: inline;
+        height:40px;
+        width:40px;
+        border-radius: 50%;
+    }
+    h1{
+        padding:15px;
+        font-size:1rem;
     }
 
 </style>

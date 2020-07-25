@@ -8,6 +8,8 @@
           :content="content"
           :created_at="created_at"
           :name="user.name"
+          :profile="user.image"
+          :filename="filename"
         >
         </Post>
       </div>
@@ -44,7 +46,10 @@ export default {
   computed: {
     commentCount() {
       return this.comments.length;
-    }
+    },
+    imageUrl(){
+      return this.$store.getters["auth/imageUrl"]
+    },
   },
   components: {
     Post
@@ -53,8 +58,10 @@ export default {
     id: Number,
     content: String,
     created_at: String,
+    filename:String,
     user: {
-      name: String
+      name: String,
+      image:String
     },
     login: Boolean,
     comments: Array,

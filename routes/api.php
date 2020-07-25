@@ -35,12 +35,14 @@ Route::post('/posts/delete/{id}' , 'PostController@delete')->name('post.delete')
 Route::post('/posts/{post}/comments' , 'PostController@addComment')->name('post.comment');
 Route::post('/posts/{id}/comments/delete' , 'PostController@deleteComment')->name('post.deleteComment');
 Route::put('/posts/{id}/like' , 'PostController@like')->name('post.like');
-Route::delete('/posts/{id}/like' , 'PostController@unlike');
+Route::delete('/posts/{id}/like' , 'PostController@unlike')->name('post.unlike');
 
 //ユーザー系
 Route::get('/user/{id}' , 'UserController@show')->name('user.show');
 Route::get('/user/likes/{id}' , 'UserController@likes')->name('user.likes');
-Route::get('/{user_id}' , 'UserController@info');
+Route::get('/{user_id}' , 'UserController@info')->name('user.info');
+Route::put('/{user_id}/profile/edit' , 'UserController@editProfile')->name('user.editProfile')->middleware('auth');
+
 
 //フォロー系
 Route::put('/user/{id}/follow' , 'UserController@follow')->name('user.follow');//->middleware('auth');
@@ -48,5 +50,8 @@ Route::delete('/user/{id}/unfollow' , 'UserController@unfollow')->name('user.unf
 Route::get('/user/{id}/follows' , 'UserController@followList')->name('user.followList');
 
 //Route::get('/test/follow' , 'UserController@fuck')->name('user.fuck');
+
+//写真系
+Route::post('/photos' , 'UserController@createPhoto')->name('photo.create')->middleware('auth');
 
 
