@@ -1,78 +1,51 @@
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
+# Laravel Vue AWS Docker　を使用したtwitterクローンのSPA　
+ 
+ よくある認証・CRUD・フォロー・いいね・コメント・画像投稿が可能なtwitterクローンのLaravelとVueによるSPA
+ 
+## アプリケーションの使用技術
+ 
+フロントエンドにVue.js、バックエンドにLaravelを使用しています。
+環境はlaradockをgit cloneし（git clone https://github.com/Laradock/laradock.git）、
+データベースにpostgreSQLを使用し、
+dockerのコンテナをビルド（docker-compose up -d --build workspace postgres php-fpm nginx）して設定を行なった後
+docker-compose exec workspace npm installなどでフロントエンドの環境を構築しました。
+デプロイはHerokuで行いました。
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+Vue.jsでは、
+・vue-routerを使用して全てフロント側でページの遷移。
+・vuexでユーザーログイン情報の保持、エラー処理など。
+・axiosでajax通信。
+・vuexでユーザーログイン情報エラー処理などを行い、axiosでajax通信。
+・FileReaderAPIで画像の読み込み、プレビュー、データ送信。 
 
-## About Laravel
+Laravelでは、
+・使用テンプレートをindex.blade.phpのみでVue側で画面描画を行なっています。
+・アプリケーションの実現に必須な様々なAPIを作成、フロントエンドとの連携、認証
+・ランダム12桁のID、IDに拡張子をつけたファイル名でAWS S3への画像の保存、その際にDBに保存、トランザクション
+・使用データベースはpostgreSQL
+・リレーションなどを活用し、APIに必要データを付与
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+VueとLaravelの連携
+・CSRF対策ではjsでクッキーの情報を取り出し、HTTPヘッダーに付与（util.js bootstrap.js）
+・Vueで必要な時にLaravelのAPIを叩く、データはなるべく保持
+・Vueインスタンス生成前にログイン情報を返すLaravelのAPIをjsで確認し、ログイン時にはVuexのstoreに保持(auth.js)
+・（一部）HTTP通信でのエラーの際にレスポンスのメッセージによるエラーハンドリング
+・laravelページネーションを活用したクリックで次の15件のデータを新たに取得し、表示させる
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+などその他細かい処理などがあります。
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 機能
+未ログイン時
+・投稿一覧
+・投稿詳細
+・ユーザーページ閲覧
+・ユーザーのフォロー・フォロワーの閲覧
+・登録・ログイン
 
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
-- [Appoly](https://www.appoly.co.uk)
-- [OP.GG](https://op.gg)
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+ログインユーザー
+・ユーザープロフィール編集（画像含む）
+・投稿（画像投稿可能）
+・ユーザーのフォロー
+・投稿に対する、いいね、コメント
+・投稿、コメントの削除
+・ログアウト
