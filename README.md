@@ -5,7 +5,7 @@ https://vue-laravel-spa.herokuapp.com/
  よくある認証・CRUD・フォロー・いいね・コメント・画像投稿が可能なtwitterクローンのLaravelとVueによるSPA
  
 ## アプリケーションの使用技術
- 
+*Vue.js Laravel aws(s3) docker*
 フロントエンドにVue.js、バックエンドにLaravelを使用しています。  
 環境はlaradockをgit cloneし（git clone https://github.com/Laradock/laradock.git）、  
 データベースにpostgreSQLを使用し、  
