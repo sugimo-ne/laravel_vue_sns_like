@@ -12,25 +12,25 @@ docker-compose exec workspace npm installなどでフロントエンドの環境
 デプロイはHerokuで行いました。
 
 Vue.jsでは、
-・vue-routerを使用して全てフロント側でページの遷移。
-・vuexでユーザーログイン情報の保持、エラー処理など。
-・axiosでajax通信。
-・vuexでユーザーログイン情報エラー処理などを行い、axiosでajax通信。
-・FileReaderAPIで画像の読み込み、プレビュー、データ送信。 
+- vue-routerを使用して全てフロント側でページの遷移。
+- vuexでユーザーログイン情報の保持、エラー処理など。
+- axiosでajax通信。
+- vuexでユーザーログイン情報エラー処理などを行い、axiosでajax通信。
+- FileReaderAPIで画像の読み込み、プレビュー、データ送信。 
 
 Laravelでは、
-・使用テンプレートをindex.blade.phpのみでVue側で画面描画を行なっています。
-・アプリケーションの実現に必須な様々なAPIを作成、フロントエンドとの連携、認証
-・ランダム12桁のID、IDに拡張子をつけたファイル名でAWS S3への画像の保存、その際にDBに保存、トランザクション
-・使用データベースはpostgreSQL
-・リレーションなどを活用し、APIに必要データを付与
+- 使用テンプレートをindex.blade.phpのみでVue側で画面描画を行なっています。
+- アプリケーションの実現に必須な様々なAPIを作成、フロントエンドとの連携、認証
+- ランダム12桁のID、IDに拡張子をつけたファイル名でAWS S3への画像の保存、その際にDBに保存、トランザクション
+- 使用データベースはpostgreSQL
+- リレーションなどを活用し、APIに必要データを付与
 
 VueとLaravelの連携
-・CSRF対策ではjsでクッキーの情報を取り出し、HTTPヘッダーに付与（util.js bootstrap.js）
-・Vueで必要な時にLaravelのAPIを叩く、データはなるべく保持
-・Vueインスタンス生成前にログイン情報を返すLaravelのAPIをjsで確認し、ログイン時にはVuexのstoreに保持(auth.js)
-・（一部）HTTP通信でのエラーの際にレスポンスのメッセージによるエラーハンドリング
-・laravelページネーションを活用したクリックで次の15件のデータを新たに取得し、表示させる
+- CSRF対策ではjsでクッキーの情報を取り出し、HTTPヘッダーに付与（util.js bootstrap.js）
+- Vueで必要な時にLaravelのAPIを叩く、データはなるべく保持
+- Vueインスタンス生成前にログイン情報を返すLaravelのAPIをjsで確認し、ログイン時にはVuexのstoreに保持(auth.js)
+- （一部）HTTP通信でのエラーの際にレスポンスのメッセージによるエラーハンドリング
+- laravelページネーションを活用したクリックで次の15件のデータを新たに取得し、表示させる
 
 などその他細かい処理などがあります。
 
