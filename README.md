@@ -1,4 +1,4 @@
-# Laravel Vue AWS Docker　を使用したtwitterクローンのSPA　
+# Laravel Vue AWS Dockerを使用したtwitterクローンのSPA　
 
 https://vue-laravel-spa.herokuapp.com/
  
