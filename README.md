@@ -6,6 +6,7 @@ https://vue-laravel-spa.herokuapp.com/
  
 ## アプリケーションの使用技術
 *Vue.js Laravel aws(s3) docker*
+
 フロントエンドにVue.js、バックエンドにLaravelを使用しています。  
 環境はlaradockをgit cloneし（git clone https://github.com/Laradock/laradock.git）、  
 データベースにpostgreSQLを使用し、  
